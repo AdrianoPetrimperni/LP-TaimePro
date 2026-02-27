@@ -1,618 +1,640 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Menu, X, CheckCircle, ArrowRight, Smartphone, 
-  MessageSquare, Database, CreditCard, Users, 
-  BarChart, Layers, Zap, Globe, Shield, Activity,
-  Headphones, DollarSign
-} from 'lucide-react';
-
-// Cores definidas na constante para reutilização
-const COLORS = {
-  bg: '#201e26',
-  primary: '#6843e1',
-  accent: '#28e7c5',
-  text: '#ffffff',
-  textMuted: '#9ca3af',
-  darker: '#16141a'
-};
-
-const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('vendas');
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMenuOpen(false);
-  };
-
-  // Links Externos rigorosamente definidos
-  const links = {
-    trial: "https://app.taime.pro/trial/sign-up",
-    login: "https://app.taime.pro/auth/sign-in",
-    api: "https://taime-pro.readme.io/reference/autentica%C3%A7%C3%A3o",
-    demo: "https://cal.com/adriano-petrimperni-5ujcqj/demontracao-gratuita-taime-pro"
-  };
-
-  // Injeção segura do Script do Widget (WhatsApp)
-  useEffect(() => {
-    const scriptId = 'taime-widget-script';
-    if (document.getElementById(scriptId)) return;
-
-    const script = document.createElement('script');
-    script.id = scriptId;
-    script.type = 'application/javascript';
-    script.src = 'https://cdn.wts.chat/scripts/widget/v2/h-widget-min.js';
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TÁIME PRO - Plataforma de Atendimento Multicanal</title>
     
-    // Inserindo os atributos da maneira correta para DOM via JS
-    script.setAttribute('data-companyid', '8f34a2be-f943-4280-ab90-a9fe22ef13be');
-    script.setAttribute('data-widgetid', '982e884f-5a65-4d76-a189-80a0060f1d52');
-    script.async = true;
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel (para correr JSX no browser) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    try {
-      document.head.appendChild(script); // Mudado para o head para garantir o carregamento prioritário
-    } catch (e) {
-      console.error("Erro ao inserir widget do WhatsApp", e);
-    }
-
-    return () => {
-      // Cleanup de segurança
-      const existingScript = document.getElementById(scriptId);
-      if (existingScript && document.head.contains(existingScript)) {
-        document.head.removeChild(existingScript);
-      }
-    };
-  }, []);
-
-  return (
-    <div className="font-sans min-h-screen selection:bg-[#28e7c5] selection:text-[#201e26]" style={{ backgroundColor: COLORS.bg, color: COLORS.text }}>
-      
-      {/* HEADER / NAV */}
-      <nav className="fixed w-full z-50 border-b border-gray-800 bg-[#201e26]/95 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-              <img className="h-10 w-auto" src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" alt="TÁIME PRO Logo" />
-            </div>
-            
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
-              <button onClick={() => scrollToSection('como-funciona')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">COMO FUNCIONA?</button>
-              <button onClick={() => scrollToSection('depoimentos')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">DEPOIMENTOS</button>
-              <button onClick={() => scrollToSection('solucoes')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">SOLUÇÕES</button>
-              <a href={links.api} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">API DEV</a>
-              
-              <a href={links.login} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#28e7c5] font-bold transition-colors">Login</a>
-              <a 
-                href={links.trial} 
-                target="_blank" rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-lg font-bold text-white transition-all transform hover:-translate-y-1 hover:shadow-lg"
-                style={{ backgroundColor: COLORS.primary }}
-              >
-                Teste Grátis
-              </a>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden flex items-center">
-              <button onClick={toggleMenu} className="text-white hover:text-[#28e7c5]">
-                {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-[#16141a] border-b border-gray-800">
-            <div className="px-4 pt-2 pb-6 space-y-4 flex flex-col">
-              <button onClick={() => scrollToSection('como-funciona')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">COMO FUNCIONA?</button>
-              <button onClick={() => scrollToSection('depoimentos')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">DEPOIMENTOS</button>
-              <button onClick={() => scrollToSection('solucoes')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">SOLUÇÕES</button>
-              <a href={links.api} target="_blank" rel="noopener noreferrer" className="text-left text-white font-bold hover:text-[#28e7c5] py-2">API PARA DESENVOLVEDORES</a>
-              <div className="h-px bg-gray-700 my-2"></div>
-              <a href={links.login} target="_blank" rel="noopener noreferrer" className="text-white font-bold py-2">Login</a>
-              <a href={links.trial} target="_blank" rel="noopener noreferrer" className="text-center py-3 rounded-lg font-bold text-white mt-2" style={{ backgroundColor: COLORS.primary }}>
-                QUERO TESTAR GRÁTIS
-              </a>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* DOBRA 1: TUDO EM UM SÓ LUGAR (Nova Primeira Seção) */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-[#201e26] to-[#16141a]">
-         <div className="max-w-4xl mx-auto px-4 text-center">
-            <img src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" alt="Logo" className="h-12 mx-auto mb-8" />
-            
-            <h2 className="text-3xl md:text-5xl font-bold mb-8">Tudo em um só lugar.</h2>
-            
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-               {["CRM", "Atendimento", "Automações", "Agentes IA", "Relatórios", "Pagamentos"].map((tag) => (
-                  <span key={tag} className="px-4 py-2 rounded-full border border-gray-700 text-sm text-gray-300">
-                     {tag}
-                  </span>
-               ))}
-            </div>
-
-            <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-               O Táime PRO substitui até <span className="text-white font-bold text-2xl">5 ferramentas</span>, centralizando sua operação e reduzindo custos drasticamente.
-            </p>
-
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-               <a 
-                 href={links.trial} 
-                 target="_blank" rel="noopener noreferrer"
-                 className="px-10 py-5 rounded-xl font-bold text-xl text-white shadow-[0_0_30px_rgba(40,231,197,0.3)] hover:shadow-[0_0_50px_rgba(40,231,197,0.5)] transition-all transform hover:-translate-y-1" 
-                 style={{ backgroundColor: COLORS.accent, color: COLORS.darker }}
-               >
-                  TESTE GRÁTIS POR 7 DIAS
-               </a>
-            </div>
-         </div>
-      </section>
-
-      {/* DOBRA 2: COMO FUNCIONA */}
-      <section id="como-funciona" className="py-20 bg-[#16141a] relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            {/* Texto */}
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Como funciona a plataforma?</h2>
-              <p className="text-gray-300 text-lg mb-6 leading-relaxed">
-                O <strong style={{ color: COLORS.accent }}>TÁIME PRO</strong> é uma plataforma multicanal que integra de forma nativa o WhatsApp, Instagram, Facebook e LinkedIn da sua empresa com um CRM inteligente.
-              </p>
-              
-              <ul className="space-y-4">
-                {[
-                  "Aumentar suas vendas",
-                  "Reter mais clientes",
-                  "Melhorar eficiência do suporte e/ou CS",
-                  "Reduzir custos operacionais e de licenças",
-                  "Automatizar etapas de atendimento com IA",
-                  "Centralizar diversos números em um só",
-                  "Controle total das vendas e suporte"
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <CheckCircle className="w-6 h-6 mr-3 flex-shrink-0" style={{ color: COLORS.accent }} />
-                    <span className="text-gray-200">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Representação Visual dos Ícones */}
-            <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-800 shadow-2xl">
-              <div className="grid grid-cols-2 gap-6">
-                 {/* Card Simples */}
-                 <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
-                    <Users className="w-8 h-8 mb-2" style={{ color: COLORS.primary }} />
-                    <span className="font-semibold text-sm">Múltiplos Atendentes</span>
-                 </div>
-                 <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
-                    <MessageSquare className="w-8 h-8 mb-2" style={{ color: COLORS.accent }} />
-                    <span className="font-semibold text-sm">Canais Unificados</span>
-                 </div>
-                 <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
-                    <Database className="w-8 h-8 mb-2" style={{ color: COLORS.primary }} />
-                    <span className="font-semibold text-sm">CRM Nativo</span>
-                 </div>
-                 <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
-                    <BarChart className="w-8 h-8 mb-2" style={{ color: COLORS.accent }} />
-                    <span className="font-semibold text-sm">Indicadores</span>
-                 </div>
-                 <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center col-span-2 hover:bg-[#322e3d] transition-colors">
-                    <Zap className="w-8 h-8 mb-2 text-yellow-400" />
-                    <span className="font-semibold text-sm">Automação & IA</span>
-                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* DOBRA 3: DEPOIMENTOS */}
-      <section id="depoimentos" className="py-20 bg-[#201e26]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">O que nossos clientes dizem</h2>
-            <div className="w-24 h-1 mx-auto rounded-full" style={{ backgroundColor: COLORS.primary }}></div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Placeholder de Depoimentos */}
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-[#16141a] p-6 rounded-xl border border-gray-800 shadow-lg flex flex-col items-center justify-center min-h-[300px] relative group overflow-hidden">
-                 <div className="absolute inset-0 bg-gradient-to-br from-[#6843e1]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                 <img src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-login.svg" className="w-12 h-12 mb-4 opacity-50" alt="Icon" />
-                 <p className="text-center text-gray-400 italic">"Print de avaliação real do cliente"</p>
-                 <div className="mt-4 flex gap-1">
-                    {[1,2,3,4,5].map(star => <span key={star} className="text-yellow-500">★</span>)}
-                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* DOBRA 4: BENEFÍCIOS E SOLUÇÕES */}
-      <section id="solucoes" className="py-20 bg-[#16141a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
-          
-          {/* Header Section */}
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Principais vantagens com implementação em apenas <span style={{ color: COLORS.accent }}>10 dias</span></h2>
-          </div>
-
-          {/* CRM Nativo */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-             <div className="order-2 md:order-1">
-                <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022b9892f8d19f66c6689c_CARDS%20AG%20MKT%20CRM.webp" alt="CRM" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
-             </div>
-             <div className="order-1 md:order-2">
-                <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                   <Database className="w-8 h-8" style={{ color: COLORS.primary }} />
-                   CRM Inteligente Nativo
-                </h3>
-                <p className="text-gray-300 leading-relaxed">Não é uma integração, é uma única plataforma com funções completas de atendimento, gestão, funil e relatórios.</p>
-                <div className="mt-6 p-4 bg-[#201e26] rounded-lg border-l-4 border-green-500">
-                   <h4 className="font-bold flex items-center gap-2 mb-2"><Shield className="w-5 h-5 text-green-500"/> WhatsApp API Oficial</h4>
-                   <p className="text-sm text-gray-400">Toda a segurança que a sua empresa precisa para não sofrer suspensão ou bloqueios pela Meta.</p>
-                </div>
-             </div>
-          </div>
-
-          {/* Omnichannel */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-             <div>
-                <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                   <Smartphone className="w-8 h-8" style={{ color: COLORS.primary }} />
-                   Atendimento Omnichannel
-                </h3>
-                <p className="text-gray-300 mb-4 leading-relaxed">Deixe seu cliente escolher o canal: WhatsApp, Instagram, Facebook e LinkedIn em um único painel, sempre organizado e vinculado ao CRM.</p>
-                <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69011fdb44c68d00c94bc738_celular%20copy.webp" alt="Celular Omnichannel" className="w-full rounded-2xl shadow-2xl mt-6 border border-gray-800" />
-             </div>
-             <div>
-                <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022b99a4cda42e5312b3f6_CARDS%20AG%20MKT%20CA.webp" alt="Atendimento" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
-             </div>
-          </div>
-
-          {/* IA e Pagamentos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-             <div>
-                <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                   <Zap className="w-8 h-8" style={{ color: COLORS.accent }} />
-                   IA e Automações
-                </h3>
-                <p className="text-gray-300 mb-6 leading-relaxed">Personalize todo o processo de atendimento. Sua equipe foca nas conversas que geram resultado, enquanto o sistema cuida do resto.</p>
-                <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022bb3c85e581a251e5074_CARDS%20AG%20MKT%20IA.webp" alt="IA" className="w-full rounded-2xl shadow-2xl border border-gray-800 mb-8" />
-             </div>
-             
-             {/* Payment Container - Imagem em cima, texto em baixo */}
-             <div className="flex flex-col">
-                <div className="relative mb-8">
-                   <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/690bb5f1f1a9dc310168abe5_pagamentos%20dobra%201%20copy%20(3)-p-1600.webp" alt="Pagamento Integrado" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
-                   {/* Div com Logo sobreposta cobrindo a marca antiga */}
-                   <div className="absolute top-4 right-4 bg-[#16141a]/95 p-3 rounded-lg backdrop-blur-sm border border-gray-700 shadow-xl">
-                     <img src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" className="h-6 w-auto" alt="TÁIME PRO" />
-                   </div>
-                </div>
-                
-                <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                   <CreditCard className="w-8 h-8" style={{ color: COLORS.accent }} />
-                   Financeiro Integrado
-                </h3>
-                <p className="text-gray-300 mb-4">O cliente negocia, paga e recebe suporte, sem sair da conversa.</p>
-             </div>
-          </div>
-
-          {/* PACOTE DE HABILIDADES - CORES INVERTIDAS CONFORME SOLICITADO */}
-          <div className="bg-[#201e26] rounded-3xl p-8 md:p-12 border border-gray-800">
-            <h3 className="text-2xl font-bold text-center mb-8">Pacote de habilidades pronto para uso</h3>
-            <p className="text-center text-gray-400 mb-10 -mt-6">Cada agente pode ser configurado com uma ou mais habilidades em poucos cliques.</p>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { title: "Etiquetas de Contato", desc: "Adicione ou remova etiquetas.", icon: <Users /> },
-                { title: "Transferir atendimento", desc: "Envie para outra equipe ou agente.", icon: <ArrowRight /> },
-                { title: "Concluir atendimento", desc: "Finalize a conversa automaticamente.", icon: <CheckCircle /> },
-                { title: "Criar Card no CRM", desc: "Cria um card com dados da conversa.", icon: <Database /> },
-                { title: "Acionar API", desc: "Envie dados e receba respostas.", icon: <Globe /> },
-                { title: "Fluxo do chatbot", desc: "Múltiplos agentes na mesma conversa.", icon: <MessageSquare /> },
-                { title: "Alterar contato", desc: "Adicione ou atualize informações.", icon: <Users /> },
-                { title: "Consultar Servidor MCP", desc: "Consultas em tempo real.", icon: <Database /> },
-                { title: "Helpdesk WhatsApp", desc: "Organiza chamados por fila.", icon: <Headphones /> },
-              ].map((skill, i) => (
-                <div key={i} className="p-6 rounded-xl shadow-lg hover:-translate-y-1 transition-all group" style={{ backgroundColor: COLORS.primary }}>
-                   <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center mb-4 text-white group-hover:bg-white group-hover:text-[#6843e1] transition-colors">
-                     {skill.icon}
-                   </div>
-                   <h4 className="font-bold text-lg mb-2 text-white">{skill.title}</h4>
-                   <p className="text-sm text-white/80">{skill.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-16 text-center">
-              <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69012349c1399c2e2eb44696_IA%20dobra%202%20copy.webp" alt="Integração IA" className="w-full max-w-4xl mx-auto rounded-xl shadow-2xl" />
-            </div>
-            
-            <div className="mt-12 text-center">
-              <a 
-                href={links.trial} 
-                target="_blank" rel="noopener noreferrer"
-                className="inline-block px-10 py-4 rounded-full font-bold text-xl text-white shadow-lg transform hover:scale-105 transition-all" 
-                style={{ backgroundColor: COLORS.primary }}
-              >
-                TESTE GRÁTIS POR 7 DIAS
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* DOBRA 5: PARA QUEM É */}
-      <section className="py-20 bg-[#201e26] border-t border-gray-800">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-8">PARA QUEM É?</h2>
-          <p className="text-xl text-gray-300 mb-10">Ideal para empresas com times de vendas, suporte ou customer success (B2B ou B2C):</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-12">
-            {[
-              "Vendas consultivas com ciclo longo",
-              "Etapas complexas para concluir a venda",
-              "Dependência de follow-up estruturado",
-              "Desejo de melhorar conversão de leads",
-              "Necessidade de reduzir custos operacionais",
-              "Analisar em tempo real a operação através de dashboards e relatórios"
-            ].map((item, i) => (
-              <div key={i} className="flex items-center bg-[#16141a] p-4 rounded-lg">
-                <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0" style={{ color: COLORS.accent }} />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-
-          <a href={links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-8 py-4 rounded-lg font-bold text-lg text-[#201e26] hover:opacity-90 transition-all" style={{ backgroundColor: COLORS.accent }}>
-            <Smartphone className="mr-2 w-5 h-5" />
-            QUERO AGENDAR UMA DEMONSTRAÇÃO
-          </a>
-        </div>
-      </section>
-
-      {/* DOBRA 6: PROBLEMAS QUE RESOLVEMOS */}
-      <section className="py-20 bg-[#16141a]">
-         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Simplifique a solução dos seus problemas</h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">Adeus bagunça de integrações. O TÁIME PRO resolve de vez:</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
-                 <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-6">
-                    <MessageSquare className="text-red-500" />
-                 </div>
-                 <h3 className="text-xl font-bold mb-3">Conversas Acumuladas</h3>
-                 <p className="text-gray-400">Organizadas automaticamente com etiquetas visuais e distribuídas para os departamentos certos.</p>
-              </div>
-
-              <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
-                 <div className="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-6">
-                    <Activity className="text-orange-500" />
-                 </div>
-                 <h3 className="text-xl font-bold mb-3">Leads que não respondem</h3>
-                 <p className="text-gray-400">Relatório de ciclo de venda e tempo de resposta para recuperar leads perdidos.</p>
-              </div>
-
-              <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
-                 <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6">
-                    <BarChart className="text-blue-500" />
-                 </div>
-                 <h3 className="text-xl font-bold mb-3">Campanhas sem métricas</h3>
-                 <p className="text-gray-400">Relatórios detalhados de conversão por etapa de funil e ROI de campanhas.</p>
-              </div>
-
-              <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
-                 <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-6">
-                    <DollarSign className="text-green-500" />
-                 </div>
-                 <h3 className="text-xl font-bold mb-3">Financeiro Manual</h3>
-                 <p className="text-gray-400">Integração ASAAS: lembretes automáticos e confirmação imediata no WhatsApp.</p>
-              </div>
-
-              <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors lg:col-span-2 flex flex-col justify-center">
-                 <h3 className="text-xl font-bold mb-3 text-white">Autonomia de Processos</h3>
-                 <p className="text-gray-400">Garanta a segurança do histórico e armazenamento de conversas, independente da rotatividade da equipe.</p>
-                 <a href={links.trial} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block text-center px-6 py-3 rounded-lg font-bold text-white w-full md:w-auto self-start" style={{ backgroundColor: COLORS.primary }}>
-                    QUERO INICIAR UM TESTE GRATUITO
-                 </a>
-              </div>
-            </div>
-         </div>
-      </section>
-
-      {/* DOBRA 7: SEGMENTOS */}
-      <section className="py-16 bg-[#201e26]">
-         <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-10">Segmentos que mais se beneficiam</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-               {[
-                 "TI, SaaS e Software", "E-commerces", "Serviços B2B", "Indústria", 
-                 "Seguros e Consórcios", "Construtoras", "Imobiliárias", "Educação"
-               ].map((seg, i) => (
-                 <div key={i} className="bg-[#16141a] p-4 rounded text-center border border-gray-800 hover:border-[#28e7c5] transition-colors cursor-default">
-                    <span className="font-medium text-sm md:text-base">{seg}</span>
-                 </div>
-               ))}
-            </div>
-            <div className="text-center mt-10">
-               <a href={links.demo} target="_blank" rel="noopener noreferrer" className="text-[#28e7c5] border border-[#28e7c5] px-6 py-3 rounded-lg hover:bg-[#28e7c5] hover:text-[#201e26] font-bold transition-all uppercase text-sm tracking-wide inline-block">
-                  Agendar Demonstração Personalizada
-               </a>
-            </div>
-         </div>
-      </section>
-
-      {/* DOBRA 8: PARA CADA DEPARTAMENTO (TABS) */}
-      <section className="py-20 bg-[#16141a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <h2 className="text-3xl font-bold text-center mb-8">Benefícios por Departamento</h2>
-           
-           <div className="flex justify-center mb-10">
-              <div className="bg-[#201e26] p-1 rounded-xl inline-flex flex-wrap justify-center">
-                 {['vendas', 'cs', 'suporte'].map((tab) => (
-                    <button
-                       key={tab}
-                       onClick={() => setActiveTab(tab)}
-                       className={`px-6 py-3 rounded-lg font-bold text-sm md:text-base transition-all m-1 ${activeTab === tab ? 'bg-[#6843e1] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
-                    >
-                       {tab === 'cs' ? 'CUSTOMER SUCCESS' : tab.toUpperCase()}
-                    </button>
-                 ))}
-              </div>
-           </div>
-
-           <div className="bg-[#201e26] p-8 md:p-12 rounded-3xl border border-gray-800 min-h-[400px]">
-              {activeTab === 'vendas' && (
-                 <div className="animate-fade-in">
-                    <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA VENDAS</h3>
-                    <div className="grid md:grid-cols-2 gap-8">
-                       <ul className="space-y-4">
-                          <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Mais conversões com vendedores focados</li>
-                          <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> 4x mais chances de fechar venda</li>
-                          <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Qualificação de leads eficiente</li>
-                          <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Dados dos clientes organizados</li>
-                       </ul>
-                       <ul className="space-y-4">
-                          <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Reciclagem de inativos com campanhas</li>
-                          <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Etiquetas Quente/Morno/Frio</li>
-                          <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Transferência automática pós-venda</li>
-                       </ul>
-                    </div>
-                 </div>
-              )}
-              {activeTab === 'cs' && (
-                 <div className="animate-fade-in">
-                    <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA CUSTOMER SUCCESS</h3>
-                    <ul className="space-y-4 grid md:grid-cols-2 gap-x-8">
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Fidelize clientes com experiência diferenciada</li>
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Chatbot para coleta de informações valiosas</li>
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Painel Kanban da jornada do cliente</li>
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Identifique pontos de melhoria facilmente</li>
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Mensagens em massa para sazonais</li>
-                    </ul>
-                 </div>
-              )}
-              {activeTab === 'suporte' && (
-                 <div className="animate-fade-in">
-                    <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA SUPORTE</h3>
-                    <ul className="space-y-4 grid md:grid-cols-2 gap-x-8">
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Clientes satisfeitos e equipe produtiva</li>
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Dúvidas comuns resolvidas automaticamente</li>
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Histórico completo para personalização</li>
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Atendimento imediato 24/7 com IA</li>
-                        <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Monitoramento de volume em tempo real</li>
-                    </ul>
-                 </div>
-              )}
-              
-              <div className="mt-10 text-center">
-                 <button type="button" className="inline-block px-8 py-3 rounded bg-white text-[#201e26] font-bold hover:bg-gray-200 transition-colors h-widget-trigger">
-                    QUERO MAIS INFORMAÇÕES
-                 </button>
-              </div>
-           </div>
-        </div>
-      </section>
-
-      {/* DOBRA 9: CAMADAS DE ATENDIMENTO */}
-      <section className="py-20 bg-[#201e26] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-               <h2 className="text-3xl font-bold mb-8">Camadas de Atendimento</h2>
-               
-               <div className="space-y-8">
-                  <div className="relative pl-8 border-l-2 border-[#6843e1]">
-                     <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#6843e1]"></span>
-                     <h3 className="text-xl font-bold mb-2">1. Camada Automática</h3>
-                     <p className="text-gray-400">Disponível 24h com chatbot humanizado para responder leads e dúvidas.</p>
-                  </div>
-                  <div className="relative pl-8 border-l-2 border-[#28e7c5]">
-                     <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#28e7c5]"></span>
-                     <h3 className="text-xl font-bold mb-2">2. Camada Inteligente</h3>
-                     <p className="text-gray-400">Integração via API e automações que eliminam esforço manual.</p>
-                  </div>
-                  <div className="relative pl-8 border-l-2 border-white">
-                     <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white"></span>
-                     <h3 className="text-xl font-bold mb-2">3. Camada Humana</h3>
-                     <p className="text-gray-400">Equipe dedicada com todo histórico para proporcionar experiência única.</p>
-                  </div>
-               </div>
-
-               <a href={links.demo} target="_blank" rel="noopener noreferrer" className="mt-10 inline-block px-8 py-3 rounded-lg font-bold text-white transition-all hover:opacity-90" style={{ backgroundColor: COLORS.primary }}>
-                  AGENDAR DEMONSTRAÇÃO
-               </a>
-            </div>
-            
-            <div className="relative">
-               <div className="absolute inset-0 bg-gradient-to-r from-[#201e26] to-transparent z-10 md:hidden"></div>
-               <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69012349c1399c2e2eb44696_IA%20dobra%202%20copy.webp" alt="Camadas IA" className="rounded-xl shadow-2xl relative z-0" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ÚLTIMA DOBRA (Fechamento Final) */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-b from-[#16141a] to-[#0f0e11]">
-        {/* Background Element */}
-        <div className="absolute top-20 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
+    <style>
+        body { margin: 0; padding: 0; background-color: #201e26; color: #ffffff; }
+        html { scroll-behavior: smooth; }
         
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#6843e1]/10 border border-[#6843e1]/30 mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#28e7c5] animate-pulse"></span>
-            <span className="text-[#28e7c5] text-sm font-semibold tracking-wide uppercase">Nova Era do Atendimento</span>
-          </div>
-          
-          {/* Texto Normal como Solicitado (Não título h1) e reduzido */}
-          <p className="text-xl md:text-2xl font-normal mb-6 leading-relaxed text-white">
-            Plataforma de atendimento multicanal com <strong style={{ color: COLORS.accent }}>CRM nativo</strong> para converter mais leads
-          </p>
-          
-          <p className="mt-4 text-lg text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Tenha múltiplos atendentes em um único número, converta suas mensagens e demandas em oportunidades de negócio, acompanhe toda a jornada do seu lead com histórico unificado.
-          </p>
-          
-          <div className="flex justify-center">
-            {/* Mantido Apenas o Iniciar Teste Grátis */}
-            <a 
-              href={links.trial}
-              target="_blank" rel="noopener noreferrer"
-              className="px-8 py-4 rounded-xl font-bold text-lg transition-all hover:opacity-90 hover:shadow-lg inline-block"
-              style={{ backgroundColor: '#ffffff', color: '#6843e1' }}
-            >
-              Iniciar Teste Grátis
-            </a>
-          </div>
-        </div>
-      </section>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        
+        /* Custom Selection Colors */
+        ::selection { background-color: #28e7c5; color: #201e26; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
 
-      {/* FOOTER */}
-      <footer className="py-8 bg-[#0f0e11] text-center border-t border-gray-800 relative z-10">
-         <p className="text-sm text-gray-600">
-            © {new Date().getFullYear()} TÁIME PRO. Todos os direitos reservados.
-         </p>
-      </footer>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-    </div>
-  );
-};
+        // 1. ÍCONES (Substitutos inline para o lucide-react para funcionar sem Node.js)
+        const Icon = ({ children, size = 24, className = "", style = {} }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} style={style}>
+                {children}
+            </svg>
+        );
 
-export default App;
+        const Menu = (p) => <Icon {...p}><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></Icon>;
+        const X = (p) => <Icon {...p}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></Icon>;
+        const CheckCircle = (p) => <Icon {...p}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></Icon>;
+        const ArrowRight = (p) => <Icon {...p}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></Icon>;
+        const Smartphone = (p) => <Icon {...p}><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></Icon>;
+        const MessageSquare = (p) => <Icon {...p}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></Icon>;
+        const Database = (p) => <Icon {...p}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></Icon>;
+        const CreditCard = (p) => <Icon {...p}><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></Icon>;
+        const Users = (p) => <Icon {...p}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></Icon>;
+        const BarChart = (p) => <Icon {...p}><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></Icon>;
+        const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
+        const Globe = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></Icon>;
+        const Shield = (p) => <Icon {...p}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.88 2a1 1 0 0 1 .11 1.8z"/></Icon>;
+        const Activity = (p) => <Icon {...p}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></Icon>;
+        const Headphones = (p) => <Icon {...p}><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></Icon>;
+        const DollarSign = (p) => <Icon {...p}><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></Icon>;
+
+        // 2. CONFIGURAÇÕES
+        const COLORS = {
+            bg: '#201e26',
+            primary: '#6843e1',
+            accent: '#28e7c5',
+            text: '#ffffff',
+            textMuted: '#9ca3af',
+            darker: '#16141a'
+        };
+
+        const links = {
+            trial: "https://app.taime.pro/trial/sign-up",
+            login: "https://app.taime.pro/auth/sign-in",
+            api: "https://taime-pro.readme.io/reference/autentica%C3%A7%C3%A3o",
+            demo: "https://cal.com/adriano-petrimperni-5ujcqj/demontracao-gratuita-taime-pro"
+        };
+
+        // 3. COMPONENTE PRINCIPAL
+        const App = () => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [activeTab, setActiveTab] = useState('vendas');
+
+            const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+                setIsMenuOpen(false);
+            };
+
+            // Injeção do Script do WhatsApp
+            useEffect(() => {
+                const scriptId = 'taime-widget-script';
+                if (document.getElementById(scriptId)) return;
+
+                const script = document.createElement('script');
+                script.id = scriptId;
+                script.type = 'application/javascript';
+                script.src = 'https://cdn.wts.chat/scripts/widget/v2/h-widget-min.js';
+                
+                script.setAttribute('data-companyid', '8f34a2be-f943-4280-ab90-a9fe22ef13be');
+                script.setAttribute('data-widgetid', '982e884f-5a65-4d76-a189-80a0060f1d52');
+                script.async = true;
+
+                try {
+                    document.head.appendChild(script);
+                } catch (e) {
+                    console.error("Erro ao inserir widget do WhatsApp", e);
+                }
+
+                return () => {
+                    const existingScript = document.getElementById(scriptId);
+                    if (existingScript && document.head.contains(existingScript)) {
+                        document.head.removeChild(existingScript);
+                    }
+                };
+            }, []);
+
+            return (
+                <div className="font-sans min-h-screen">
+                    
+                    {/* HEADER / NAV */}
+                    <nav className="fixed w-full z-50 border-b border-gray-800 bg-[#201e26]/95 backdrop-blur-sm">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-20">
+                                <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+                                    <img className="h-10 w-auto" src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" alt="TÁIME PRO Logo" />
+                                </div>
+                                
+                                <div className="hidden md:flex items-center space-x-8">
+                                    <button onClick={() => scrollToSection('como-funciona')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">COMO FUNCIONA?</button>
+                                    <button onClick={() => scrollToSection('depoimentos')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">DEPOIMENTOS</button>
+                                    <button onClick={() => scrollToSection('solucoes')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">SOLUÇÕES</button>
+                                    <a href={links.api} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">API DEV</a>
+                                    
+                                    <a href={links.login} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#28e7c5] font-bold transition-colors">Login</a>
+                                    <a href={links.trial} target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 rounded-lg font-bold text-white transition-all transform hover:-translate-y-1 hover:shadow-lg" style={{ backgroundColor: COLORS.primary }}>
+                                        Teste Grátis
+                                    </a>
+                                </div>
+
+                                <div className="md:hidden flex items-center">
+                                    <button onClick={toggleMenu} className="text-white hover:text-[#28e7c5]">
+                                        {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Mobile Menu */}
+                        {isMenuOpen && (
+                            <div className="md:hidden bg-[#16141a] border-b border-gray-800">
+                                <div className="px-4 pt-2 pb-6 space-y-4 flex flex-col">
+                                    <button onClick={() => scrollToSection('como-funciona')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">COMO FUNCIONA?</button>
+                                    <button onClick={() => scrollToSection('depoimentos')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">DEPOIMENTOS</button>
+                                    <button onClick={() => scrollToSection('solucoes')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">SOLUÇÕES</button>
+                                    <a href={links.api} target="_blank" rel="noopener noreferrer" className="text-left text-white font-bold hover:text-[#28e7c5] py-2">API PARA DESENVOLVEDORES</a>
+                                    <div className="h-px bg-gray-700 my-2"></div>
+                                    <a href={links.login} target="_blank" rel="noopener noreferrer" className="text-white font-bold py-2">Login</a>
+                                    <a href={links.trial} target="_blank" rel="noopener noreferrer" className="text-center py-3 rounded-lg font-bold text-white mt-2" style={{ backgroundColor: COLORS.primary }}>
+                                        QUERO TESTAR GRÁTIS
+                                    </a>
+                                </div>
+                            </div>
+                        )}
+                    </nav>
+
+                    {/* DOBRA 1: TUDO EM UM SÓ LUGAR */}
+                    <section className="pt-32 pb-20 bg-gradient-to-b from-[#201e26] to-[#16141a]">
+                        <div className="max-w-4xl mx-auto px-4 text-center">
+                            <img src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" alt="Logo" className="h-12 mx-auto mb-8" />
+                            
+                            <h2 className="text-3xl md:text-5xl font-bold mb-8">Tudo em um só lugar.</h2>
+                            
+                            <div className="flex flex-wrap justify-center gap-4 mb-12">
+                                {["CRM", "Atendimento", "Automações", "Agentes IA", "Relatórios", "Pagamentos"].map((tag) => (
+                                    <span key={tag} className="px-4 py-2 rounded-full border border-gray-700 text-sm text-gray-300">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                                O Táime PRO substitui até <span className="text-white font-bold text-2xl">5 ferramentas</span>, centralizando sua operação e reduzindo custos drasticamente.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                <a href={links.trial} target="_blank" rel="noopener noreferrer" className="px-10 py-5 rounded-xl font-bold text-xl text-white shadow-[0_0_30px_rgba(40,231,197,0.3)] hover:shadow-[0_0_50px_rgba(40,231,197,0.5)] transition-all transform hover:-translate-y-1" style={{ backgroundColor: COLORS.accent, color: COLORS.darker }}>
+                                    TESTE GRÁTIS POR 7 DIAS
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* DOBRA 2: COMO FUNCIONA */}
+                    <section id="como-funciona" className="py-20 bg-[#16141a] relative">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                                
+                                <div>
+                                    <h2 className="text-3xl md:text-4xl font-bold mb-6">Como funciona a plataforma?</h2>
+                                    <p className="text-gray-300 text-lg mb-6 leading-relaxed">
+                                        O <strong style={{ color: COLORS.accent }}>TÁIME PRO</strong> é uma plataforma multicanal que integra de forma nativa o WhatsApp, Instagram, Facebook e LinkedIn da sua empresa com um CRM inteligente.
+                                    </p>
+                                    
+                                    <ul className="space-y-4">
+                                        {[
+                                            "Aumentar suas vendas",
+                                            "Reter mais clientes",
+                                            "Melhorar eficiência do suporte e/ou CS",
+                                            "Reduzir custos operacionais e de licenças",
+                                            "Automatizar etapas de atendimento com IA",
+                                            "Centralizar diversos números em um só",
+                                            "Controle total das vendas e suporte"
+                                        ].map((item, index) => (
+                                            <li key={index} className="flex items-start">
+                                                <CheckCircle className="w-6 h-6 mr-3 flex-shrink-0" style={{ color: COLORS.accent }} />
+                                                <span className="text-gray-200">{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-800 shadow-2xl">
+                                    <div className="grid grid-cols-2 gap-6">
+                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
+                                            <Users className="w-8 h-8 mb-2" style={{ color: COLORS.primary }} />
+                                            <span className="font-semibold text-sm">Múltiplos Atendentes</span>
+                                        </div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
+                                            <MessageSquare className="w-8 h-8 mb-2" style={{ color: COLORS.accent }} />
+                                            <span className="font-semibold text-sm">Canais Unificados</span>
+                                        </div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
+                                            <Database className="w-8 h-8 mb-2" style={{ color: COLORS.primary }} />
+                                            <span className="font-semibold text-sm">CRM Nativo</span>
+                                        </div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
+                                            <BarChart className="w-8 h-8 mb-2" style={{ color: COLORS.accent }} />
+                                            <span className="font-semibold text-sm">Indicadores</span>
+                                        </div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center col-span-2 hover:bg-[#322e3d] transition-colors">
+                                            <Zap className="w-8 h-8 mb-2 text-yellow-400" />
+                                            <span className="font-semibold text-sm">Automação & IA</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* DOBRA 3: DEPOIMENTOS */}
+                    <section id="depoimentos" className="py-20 bg-[#201e26]">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center mb-16">
+                                <h2 className="text-3xl font-bold mb-4">O que nossos clientes dizem</h2>
+                                <div className="w-24 h-1 mx-auto rounded-full" style={{ backgroundColor: COLORS.primary }}></div>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {[1, 2, 3].map((item) => (
+                                    <div key={item} className="bg-[#16141a] p-6 rounded-xl border border-gray-800 shadow-lg flex flex-col items-center justify-center min-h-[300px] relative group overflow-hidden">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-[#6843e1]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                        <img src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-login.svg" className="w-12 h-12 mb-4 opacity-50" alt="Icon" />
+                                        <p className="text-center text-gray-400 italic">"Print de avaliação real do cliente"</p>
+                                        <div className="mt-4 flex gap-1">
+                                            {[1,2,3,4,5].map(star => <span key={star} className="text-yellow-500">★</span>)}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* DOBRA 4: BENEFÍCIOS E SOLUÇÕES */}
+                    <section id="solucoes" className="py-20 bg-[#16141a]">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+                            
+                            <div className="text-center max-w-3xl mx-auto">
+                                <h2 className="text-3xl md:text-4xl font-bold mb-6">Principais vantagens com implementação em apenas <span style={{ color: COLORS.accent }}>10 dias</span></h2>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                                <div className="order-2 md:order-1">
+                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022b9892f8d19f66c6689c_CARDS%20AG%20MKT%20CRM.webp" alt="CRM" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
+                                </div>
+                                <div className="order-1 md:order-2">
+                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                                        <Database className="w-8 h-8" style={{ color: COLORS.primary }} />
+                                        CRM Inteligente Nativo
+                                    </h3>
+                                    <p className="text-gray-300 leading-relaxed">Não é uma integração, é uma única plataforma com funções completas de atendimento, gestão, funil e relatórios.</p>
+                                    <div className="mt-6 p-4 bg-[#201e26] rounded-lg border-l-4 border-green-500">
+                                        <h4 className="font-bold flex items-center gap-2 mb-2"><Shield className="w-5 h-5 text-green-500"/> WhatsApp API Oficial</h4>
+                                        <p className="text-sm text-gray-400">Toda a segurança que a sua empresa precisa para não sofrer suspensão ou bloqueios pela Meta.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                                <div>
+                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                                        <Smartphone className="w-8 h-8" style={{ color: COLORS.primary }} />
+                                        Atendimento Omnichannel
+                                    </h3>
+                                    <p className="text-gray-300 mb-4 leading-relaxed">Deixe seu cliente escolher o canal: WhatsApp, Instagram, Facebook e LinkedIn em um único painel, sempre organizado e vinculado ao CRM.</p>
+                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69011fdb44c68d00c94bc738_celular%20copy.webp" alt="Celular Omnichannel" className="w-full rounded-2xl shadow-2xl mt-6 border border-gray-800" />
+                                </div>
+                                <div>
+                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022b99a4cda42e5312b3f6_CARDS%20AG%20MKT%20CA.webp" alt="Atendimento" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                                <div>
+                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                                        <Zap className="w-8 h-8" style={{ color: COLORS.accent }} />
+                                        IA e Automações
+                                    </h3>
+                                    <p className="text-gray-300 mb-6 leading-relaxed">Personalize todo o processo de atendimento. Sua equipe foca nas conversas que geram resultado, enquanto o sistema cuida do resto.</p>
+                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022bb3c85e581a251e5074_CARDS%20AG%20MKT%20IA.webp" alt="IA" className="w-full rounded-2xl shadow-2xl border border-gray-800 mb-8" />
+                                </div>
+                                
+                                <div className="flex flex-col">
+                                    <div className="relative mb-8">
+                                        <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/690bb5f1f1a9dc310168abe5_pagamentos%20dobra%201%20copy%20(3)-p-1600.webp" alt="Pagamento Integrado" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
+                                        <div className="absolute top-4 right-4 bg-[#16141a]/95 p-3 rounded-lg backdrop-blur-sm border border-gray-700 shadow-xl">
+                                            <img src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" className="h-6 w-auto" alt="TÁIME PRO" />
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                                        <CreditCard className="w-8 h-8" style={{ color: COLORS.accent }} />
+                                        Financeiro Integrado
+                                    </h3>
+                                    <p className="text-gray-300 mb-4">O cliente negocia, paga e recebe suporte, sem sair da conversa.</p>
+                                </div>
+                            </div>
+
+                            {/* PACOTE DE HABILIDADES */}
+                            <div className="bg-[#201e26] rounded-3xl p-8 md:p-12 border border-gray-800">
+                                <h3 className="text-2xl font-bold text-center mb-8">Pacote de habilidades pronto para uso</h3>
+                                <p className="text-center text-gray-400 mb-10 -mt-6">Cada agente pode ser configurado com uma ou mais habilidades em poucos cliques.</p>
+                                
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {[
+                                        { title: "Etiquetas de Contato", desc: "Adicione ou remova etiquetas.", icon: <Users /> },
+                                        { title: "Transferir atendimento", desc: "Envie para outra equipe ou agente.", icon: <ArrowRight /> },
+                                        { title: "Concluir atendimento", desc: "Finalize a conversa automaticamente.", icon: <CheckCircle /> },
+                                        { title: "Criar Card no CRM", desc: "Cria um card com dados da conversa.", icon: <Database /> },
+                                        { title: "Acionar API", desc: "Envie dados e receba respostas.", icon: <Globe /> },
+                                        { title: "Fluxo do chatbot", desc: "Múltiplos agentes na mesma conversa.", icon: <MessageSquare /> },
+                                        { title: "Alterar contato", desc: "Adicione ou atualize informações.", icon: <Users /> },
+                                        { title: "Consultar Servidor MCP", desc: "Consultas em tempo real.", icon: <Database /> },
+                                        { title: "Helpdesk WhatsApp", desc: "Organiza chamados por fila.", icon: <Headphones /> },
+                                    ].map((skill, i) => (
+                                        <div key={i} className="p-6 rounded-xl shadow-lg hover:-translate-y-1 transition-all group" style={{ backgroundColor: COLORS.primary }}>
+                                            <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center mb-4 text-white group-hover:bg-white group-hover:text-[#6843e1] transition-colors">
+                                                {skill.icon}
+                                            </div>
+                                            <h4 className="font-bold text-lg mb-2 text-white">{skill.title}</h4>
+                                            <p className="text-sm text-white/80">{skill.desc}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="mt-16 text-center">
+                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69012349c1399c2e2eb44696_IA%20dobra%202%20copy.webp" alt="Integração IA" className="w-full max-w-4xl mx-auto rounded-xl shadow-2xl" />
+                                </div>
+                                
+                                <div className="mt-12 text-center">
+                                    <a href={links.trial} target="_blank" rel="noopener noreferrer" className="inline-block px-10 py-4 rounded-full font-bold text-xl text-white shadow-lg transform hover:scale-105 transition-all" style={{ backgroundColor: COLORS.primary }}>
+                                        TESTE GRÁTIS POR 7 DIAS
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* DOBRA 5: PARA QUEM É */}
+                    <section className="py-20 bg-[#201e26] border-t border-gray-800">
+                        <div className="max-w-4xl mx-auto px-4 text-center">
+                            <h2 className="text-3xl font-bold mb-8">PARA QUEM É?</h2>
+                            <p className="text-xl text-gray-300 mb-10">Ideal para empresas com times de vendas, suporte ou customer success (B2B ou B2C):</p>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-12">
+                                {[
+                                    "Vendas consultivas com ciclo longo",
+                                    "Etapas complexas para concluir a venda",
+                                    "Dependência de follow-up estruturado",
+                                    "Desejo de melhorar conversão de leads",
+                                    "Necessidade de reduzir custos operacionais",
+                                    "Analisar em tempo real a operação através de dashboards e relatórios"
+                                ].map((item, i) => (
+                                    <div key={i} className="flex items-center bg-[#16141a] p-4 rounded-lg">
+                                        <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0" style={{ color: COLORS.accent }} />
+                                        <span>{item}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <a href={links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-8 py-4 rounded-lg font-bold text-lg text-[#201e26] hover:opacity-90 transition-all" style={{ backgroundColor: COLORS.accent }}>
+                                <Smartphone className="mr-2 w-5 h-5" />
+                                QUERO AGENDAR UMA DEMONSTRAÇÃO
+                            </a>
+                        </div>
+                    </section>
+
+                    {/* DOBRA 6: PROBLEMAS QUE RESOLVEMOS */}
+                    <section className="py-20 bg-[#16141a]">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center mb-16">
+                                <h2 className="text-3xl md:text-4xl font-bold mb-4">Simplifique a solução dos seus problemas</h2>
+                                <p className="text-gray-400 max-w-2xl mx-auto">Adeus bagunça de integrações. O TÁIME PRO resolve de vez:</p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
+                                    <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-6">
+                                        <MessageSquare className="text-red-500" />
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-3">Conversas Acumuladas</h3>
+                                    <p className="text-gray-400">Organizadas automaticamente com etiquetas visuais e distribuídas para os departamentos certos.</p>
+                                </div>
+
+                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
+                                    <div className="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-6">
+                                        <Activity className="text-orange-500" />
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-3">Leads que não respondem</h3>
+                                    <p className="text-gray-400">Relatório de ciclo de venda e tempo de resposta para recuperar leads perdidos.</p>
+                                </div>
+
+                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
+                                    <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6">
+                                        <BarChart className="text-blue-500" />
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-3">Campanhas sem métricas</h3>
+                                    <p className="text-gray-400">Relatórios detalhados de conversão por etapa de funil e ROI de campanhas.</p>
+                                </div>
+
+                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
+                                    <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-6">
+                                        <DollarSign className="text-green-500" />
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-3">Financeiro Manual</h3>
+                                    <p className="text-gray-400">Integração ASAAS: lembretes automáticos e confirmação imediata no WhatsApp.</p>
+                                </div>
+
+                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors lg:col-span-2 flex flex-col justify-center">
+                                    <h3 className="text-xl font-bold mb-3 text-white">Autonomia de Processos</h3>
+                                    <p className="text-gray-400">Garanta a segurança do histórico e armazenamento de conversas, independente da rotatividade da equipe.</p>
+                                    <a href={links.trial} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block text-center px-6 py-3 rounded-lg font-bold text-white w-full md:w-auto self-start" style={{ backgroundColor: COLORS.primary }}>
+                                        QUERO INICIAR UM TESTE GRATUITO
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* DOBRA 7: SEGMENTOS */}
+                    <section className="py-16 bg-[#201e26]">
+                        <div className="max-w-6xl mx-auto px-4">
+                            <h2 className="text-3xl font-bold text-center mb-10">Segmentos que mais se beneficiam</h2>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                {[
+                                    "TI, SaaS e Software", "E-commerces", "Serviços B2B", "Indústria", 
+                                    "Seguros e Consórcios", "Construtoras", "Imobiliárias", "Educação"
+                                ].map((seg, i) => (
+                                    <div key={i} className="bg-[#16141a] p-4 rounded text-center border border-gray-800 hover:border-[#28e7c5] transition-colors cursor-default">
+                                        <span className="font-medium text-sm md:text-base">{seg}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="text-center mt-10">
+                                <a href={links.demo} target="_blank" rel="noopener noreferrer" className="text-[#28e7c5] border border-[#28e7c5] px-6 py-3 rounded-lg hover:bg-[#28e7c5] hover:text-[#201e26] font-bold transition-all uppercase text-sm tracking-wide inline-block">
+                                    Agendar Demonstração Personalizada
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* DOBRA 8: PARA CADA DEPARTAMENTO (TABS) */}
+                    <section className="py-20 bg-[#16141a]">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <h2 className="text-3xl font-bold text-center mb-8">Benefícios por Departamento</h2>
+                            
+                            <div className="flex justify-center mb-10">
+                                <div className="bg-[#201e26] p-1 rounded-xl inline-flex flex-wrap justify-center">
+                                    {['vendas', 'cs', 'suporte'].map((tab) => (
+                                        <button
+                                            key={tab}
+                                            onClick={() => setActiveTab(tab)}
+                                            className={`px-6 py-3 rounded-lg font-bold text-sm md:text-base transition-all m-1 ${activeTab === tab ? 'bg-[#6843e1] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                        >
+                                            {tab === 'cs' ? 'CUSTOMER SUCCESS' : tab.toUpperCase()}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="bg-[#201e26] p-8 md:p-12 rounded-3xl border border-gray-800 min-h-[400px]">
+                                {activeTab === 'vendas' && (
+                                    <div className="animate-fade-in">
+                                        <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA VENDAS</h3>
+                                        <div className="grid md:grid-cols-2 gap-8">
+                                            <ul className="space-y-4">
+                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Mais conversões com vendedores focados</li>
+                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> 4x mais chances de fechar venda</li>
+                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Qualificação de leads eficiente</li>
+                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Dados dos clientes organizados</li>
+                                            </ul>
+                                            <ul className="space-y-4">
+                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Reciclagem de inativos com campanhas</li>
+                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Etiquetas Quente/Morno/Frio</li>
+                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Transferência automática pós-venda</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                )}
+                                {activeTab === 'cs' && (
+                                    <div className="animate-fade-in">
+                                        <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA CUSTOMER SUCCESS</h3>
+                                        <ul className="space-y-4 grid md:grid-cols-2 gap-x-8">
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Fidelize clientes com experiência diferenciada</li>
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Chatbot para coleta de informações valiosas</li>
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Painel Kanban da jornada do cliente</li>
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Identifique pontos de melhoria facilmente</li>
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Mensagens em massa para sazonais</li>
+                                        </ul>
+                                    </div>
+                                )}
+                                {activeTab === 'suporte' && (
+                                    <div className="animate-fade-in">
+                                        <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA SUPORTE</h3>
+                                        <ul className="space-y-4 grid md:grid-cols-2 gap-x-8">
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Clientes satisfeitos e equipe produtiva</li>
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Dúvidas comuns resolvidas automaticamente</li>
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Histórico completo para personalização</li>
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Atendimento imediato 24/7 com IA</li>
+                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Monitoramento de volume em tempo real</li>
+                                        </ul>
+                                    </div>
+                                )}
+                                
+                                <div className="mt-10 text-center">
+                                    <button type="button" className="inline-block px-8 py-3 rounded bg-white text-[#201e26] font-bold hover:bg-gray-200 transition-colors h-widget-trigger">
+                                        QUERO MAIS INFORMAÇÕES
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* DOBRA 9: CAMADAS DE ATENDIMENTO */}
+                    <section className="py-20 bg-[#201e26] relative overflow-hidden">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="grid md:grid-cols-2 gap-12 items-center">
+                                <div>
+                                    <h2 className="text-3xl font-bold mb-8">Camadas de Atendimento</h2>
+                                    
+                                    <div className="space-y-8">
+                                        <div className="relative pl-8 border-l-2 border-[#6843e1]">
+                                            <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#6843e1]"></span>
+                                            <h3 className="text-xl font-bold mb-2">1. Camada Automática</h3>
+                                            <p className="text-gray-400">Disponível 24h com chatbot humanizado para responder leads e dúvidas.</p>
+                                        </div>
+                                        <div className="relative pl-8 border-l-2 border-[#28e7c5]">
+                                            <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#28e7c5]"></span>
+                                            <h3 className="text-xl font-bold mb-2">2. Camada Inteligente</h3>
+                                            <p className="text-gray-400">Integração via API e automações que eliminam esforço manual.</p>
+                                        </div>
+                                        <div className="relative pl-8 border-l-2 border-white">
+                                            <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white"></span>
+                                            <h3 className="text-xl font-bold mb-2">3. Camada Humana</h3>
+                                            <p className="text-gray-400">Equipe dedicada com todo histórico para proporcionar experiência única.</p>
+                                        </div>
+                                    </div>
+
+                                    <a href={links.demo} target="_blank" rel="noopener noreferrer" className="mt-10 inline-block px-8 py-3 rounded-lg font-bold text-white transition-all hover:opacity-90" style={{ backgroundColor: COLORS.primary }}>
+                                        AGENDAR DEMONSTRAÇÃO
+                                    </a>
+                                </div>
+                                
+                                <div className="relative">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-[#201e26] to-transparent z-10 md:hidden"></div>
+                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69012349c1399c2e2eb44696_IA%20dobra%202%20copy.webp" alt="Camadas IA" className="rounded-xl shadow-2xl relative z-0" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* ÚLTIMA DOBRA (Fechamento Final) */}
+                    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-b from-[#16141a] to-[#0f0e11]">
+                        <div className="absolute top-20 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
+                        
+                        <div className="max-w-7xl mx-auto text-center relative z-10">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#6843e1]/10 border border-[#6843e1]/30 mb-8">
+                                <span className="w-2 h-2 rounded-full bg-[#28e7c5] animate-pulse"></span>
+                                <span className="text-[#28e7c5] text-sm font-semibold tracking-wide uppercase">Nova Era do Atendimento</span>
+                            </div>
+                            
+                            <p className="text-xl md:text-2xl font-normal mb-6 leading-relaxed text-white">
+                                Plataforma de atendimento multicanal com <strong style={{ color: COLORS.accent }}>CRM nativo</strong> para converter mais leads
+                            </p>
+                            
+                            <p className="mt-4 text-lg text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+                                Tenha múltiplos atendentes em um único número, converta suas mensagens e demandas em oportunidades de negócio, acompanhe toda a jornada do seu lead com histórico unificado.
+                            </p>
+                            
+                            <div className="flex justify-center">
+                                <a href={links.trial} target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-xl font-bold text-lg transition-all hover:opacity-90 hover:shadow-lg inline-block" style={{ backgroundColor: '#ffffff', color: '#6843e1' }}>
+                                    Iniciar Teste Grátis
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* FOOTER */}
+                    <footer className="py-8 bg-[#0f0e11] text-center border-t border-gray-800 relative z-10">
+                        <p className="text-sm text-gray-600">
+                            © {new Date().getFullYear()} TÁIME PRO. Todos os direitos reservados.
+                        </p>
+                    </footer>
+
+                </div>
+            );
+        };
+
+        // Renderiza o React no Documento
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
