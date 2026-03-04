@@ -3,31 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TÁIME PRO - Plataforma de Atendimento Multicanal</title>
     
-    <!-- Tailwind CSS -->
+    <!-- SEO Enterprise (Invisível para o utilizador) -->
+    <title>CRM para WhatsApp e Atendimento Multicanal | Táime PRO</title>
+    <meta name="description" content="Escale a sua operação com o Táime PRO: CRM para WhatsApp com API Oficial, atendimento omnichannel e automação com IA. Teste grátis por 7 dias!">
+    <link rel="canonical" href="https://taime.pro/crm-whatsapp">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <meta name="theme-color" content="#6843e1">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CRM para WhatsApp e Atendimento Multicanal | Táime PRO">
+    <meta property="og:description" content="Gestão de leads, funil de vendas e automação de atendimento em uma única plataforma omnichannel.">
+    <meta property="og:image" content="https://i.ibb.co/W4TwJXwM/Preto-e-Roxo-Moderno-Aumente-Suas-Vendas-Marketing-Post-para-Instagram-3.png">
+
+    <!-- JSON-LD: Dados Estruturados para o Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Táime PRO",
+          "operatingSystem": "Web",
+          "applicationCategory": "BusinessApplication",
+          "description": "CRM para WhatsApp e Plataforma Omnichannel de atendimento.",
+          "offers": { "@type": "Offer", "price": "485.00", "priceCurrency": "BRL" }
+        },
+        {
+          "@type": "Organization",
+          "name": "Táime PRO",
+          "url": "https://taime.pro",
+          "logo": "https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "O que é um CRM para WhatsApp?",
+              "acceptedAnswer": { "@type": "Answer", "text": "É uma ferramenta que organiza o atendimento e o funil de vendas diretamente integrado ao WhatsApp Business API." }
+            },
+            {
+              "@type": "Question",
+              "name": "O Táime PRO usa API Oficial?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Sim, utilizamos a API Oficial da Meta para garantir segurança e estabilidade total." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Scripts e Estilos -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel (para correr JSX no browser) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-        body { margin: 0; padding: 0; background-color: #201e26; color: #ffffff; }
+        body { margin: 0; padding: 0; background-color: #201e26; color: #ffffff; overflow-x: hidden; }
         html { scroll-behavior: smooth; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        
-        /* Custom Selection Colors */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
         ::selection { background-color: #28e7c5; color: #201e26; }
     </style>
 </head>
@@ -37,629 +75,362 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // 1. ÍCONES (Substitutos inline para o lucide-react para funcionar sem Node.js)
-        const Icon = ({ children, size = 24, className = "", style = {} }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} style={style}>
-                {children}
-            </svg>
+        // Ícones Inline
+        const Icon = ({ children, size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
         );
-
         const Menu = (p) => <Icon {...p}><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></Icon>;
         const X = (p) => <Icon {...p}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></Icon>;
         const CheckCircle = (p) => <Icon {...p}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></Icon>;
-        const ArrowRight = (p) => <Icon {...p}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></Icon>;
-        const Smartphone = (p) => <Icon {...p}><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></Icon>;
-        const MessageSquare = (p) => <Icon {...p}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></Icon>;
         const Database = (p) => <Icon {...p}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></Icon>;
+        const Smartphone = (p) => <Icon {...p}><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></Icon>;
+        const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
         const CreditCard = (p) => <Icon {...p}><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></Icon>;
         const Users = (p) => <Icon {...p}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></Icon>;
         const BarChart = (p) => <Icon {...p}><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></Icon>;
-        const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
-        const Globe = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></Icon>;
-        const Shield = (p) => <Icon {...p}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.88 2a1 1 0 0 1 .11 1.8z"/></Icon>;
-        const Activity = (p) => <Icon {...p}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></Icon>;
         const Headphones = (p) => <Icon {...p}><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></Icon>;
-        const DollarSign = (p) => <Icon {...p}><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></Icon>;
+        const Gift = (p) => <Icon {...p}><polyline points="20 12 20 22 4 22 4 12"/><rect width="20" height="5" x="2" y="7"/><line x1="12" x2="12" y1="22" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></Icon>;
+        const Award = (p) => <Icon {...p}><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></Icon>;
+        const MessageSquare = (p) => <Icon {...p}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></Icon>;
+        const ArrowRight = (p) => <Icon {...p}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></Icon>;
 
-        // 2. CONFIGURAÇÕES
-        const COLORS = {
-            bg: '#201e26',
-            primary: '#6843e1',
-            accent: '#28e7c5',
-            text: '#ffffff',
-            textMuted: '#9ca3af',
-            darker: '#16141a'
+        const COLORS = { bg: '#201e26', primary: '#6843e1', accent: '#28e7c5', text: '#ffffff' };
+        const links = { 
+          trial: "https://app.taime.pro/trial/sign-up", 
+          login: "https://app.taime.pro/auth/sign-in", 
+          demo: "https://cal.com/adriano-petrimperni-5ujcqj/demontracao-gratuita-taime-pro",
+          api: "https://taime-pro.readme.io/reference/autentica%C3%A7%C3%A3o"
         };
 
-        const links = {
-            trial: "https://app.taime.pro/trial/sign-up",
-            login: "https://app.taime.pro/auth/sign-in",
-            api: "https://taime-pro.readme.io/reference/autentica%C3%A7%C3%A3o",
-            demo: "https://cal.com/adriano-petrimperni-5ujcqj/demontracao-gratuita-taime-pro"
-        };
-
-        const depoimentosLista = [
-            {
-                nome: "IEFE",
-                logo: "https://evolucaoeducacional.com.br/wp-content/uploads/2023/04/iefe-evolucao-educacional-pos-graduacao-professores-educacao-segunda-licenciatura-professora-ensino-escola-faculdade-universidade-pedagogia-magisterio-logo3-1024x484.png",
-                texto: "Com a Táime PRO, conseguimos centralizar o atendimento aos nossos alunos e automatizar a triagem de matrículas. A redução de custos operacionais e o aumento na conversão foram notáveis. Excelente plataforma!"
-            },
-            {
-                nome: "LEGUS",
-                logo: "https://administracaodecondominios.grupolegus.com.br/wp-content/webp-express/webp-images/uploads/2023/10/legus-administradora-de-condominios-zona-sul-sao-paulo-imobiliaria-imoveis-gestao-condominial-logo1.png.webp",
-                texto: "O CRM nativo nos deu uma visão clara da jornada no setor condominial. O suporte 24/7 com IA agilizou os chamados, organizou as filas de atendimento e aumentou muito a satisfação dos condôminos."
-            },
-            {
-                nome: "Silógica",
-                logo: "https://silogica.com.br/wp-content/uploads/2024/08/logo-silogica-4.png",
-                texto: "A automação de respostas e a integração multicanal revolucionaram nossa distribuição. Agora, com a equipe toda no mesmo número, os vendedores fecham negócios muito mais rápido. Recomendo fortemente!"
-            }
-        ];
-
-        // 3. COMPONENTE PRINCIPAL
         const App = () => {
             const [isMenuOpen, setIsMenuOpen] = useState(false);
-            const [activeTab, setActiveTab] = useState('vendas');
-
-            const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
             const scrollToSection = (id) => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
                 setIsMenuOpen(false);
             };
 
-            // Injeção do Script do WhatsApp
             useEffect(() => {
-                const scriptId = 'taime-widget-script';
-                if (document.getElementById(scriptId)) return;
-
                 const script = document.createElement('script');
-                script.id = scriptId;
-                script.type = 'application/javascript';
+                script.id = 'taime-widget-script';
                 script.src = 'https://cdn.wts.chat/scripts/widget/v2/h-widget-min.js';
-                
                 script.setAttribute('data-companyid', '8f34a2be-f943-4280-ab90-a9fe22ef13be');
                 script.setAttribute('data-widgetid', '982e884f-5a65-4d76-a189-80a0060f1d52');
                 script.async = true;
-
-                try {
-                    document.head.appendChild(script);
-                } catch (e) {
-                    console.error("Erro ao inserir widget do WhatsApp", e);
-                }
+                document.head.appendChild(script);
 
                 return () => {
-                    const existingScript = document.getElementById(scriptId);
-                    if (existingScript && document.head.contains(existingScript)) {
-                        document.head.removeChild(existingScript);
-                    }
+                    const existingScript = document.getElementById('taime-widget-script');
+                    if (existingScript) document.head.removeChild(existingScript);
                 };
             }, []);
 
             return (
-                <div className="font-sans min-h-screen">
-                    
-                    {/* HEADER / NAV */}
+                <div className="min-h-screen">
+                    {/* NAV COMPLETA */}
                     <nav className="fixed w-full z-50 border-b border-gray-800 bg-[#201e26]/95 backdrop-blur-sm">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="flex justify-between items-center h-20">
-                                <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-                                    <img className="h-10 w-auto" src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" alt="TÁIME PRO Logo" />
+                                <img className="h-10 w-auto cursor-pointer" src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" alt="Táime PRO" onClick={() => window.scrollTo(0,0)} />
+                                <div className="hidden lg:flex items-center space-x-6">
+                                    <button onClick={() => scrollToSection('como-funciona')} className="text-white hover:text-[#28e7c5] text-sm font-bold">COMO FUNCIONA</button>
+                                    <button onClick={() => scrollToSection('depoimentos')} className="text-white hover:text-[#28e7c5] text-sm font-bold uppercase">Depoimentos</button>
+                                    <button onClick={() => scrollToSection('solucoes')} className="text-white hover:text-[#28e7c5] text-sm font-bold">VANTAGENS</button>
+                                    <button onClick={() => scrollToSection('planos')} className="text-white hover:text-[#28e7c5] text-sm font-bold">PLANOS</button>
+                                    <a href={links.api} target="_blank" className="text-white hover:text-[#28e7c5] text-sm font-bold uppercase">API DEV</a>
+                                    <a href={links.login} target="_blank" className="text-white font-bold hover:text-[#28e7c5]">Login</a>
+                                    <a href={links.trial} target="_blank" className="px-6 py-3 rounded-full font-bold text-white bg-[#6843e1] shadow-lg transform hover:-translate-y-1 transition-all">Teste Grátis</a>
                                 </div>
-                                
-                                <div className="hidden md:flex items-center space-x-8">
-                                    <button onClick={() => scrollToSection('como-funciona')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">COMO FUNCIONA?</button>
-                                    <button onClick={() => scrollToSection('depoimentos')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">DEPOIMENTOS</button>
-                                    <button onClick={() => scrollToSection('solucoes')} className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">SOLUÇÕES</button>
-                                    <a href={links.api} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#28e7c5] transition-colors text-sm font-bold">API DEV</a>
-                                    
-                                    <a href={links.login} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#28e7c5] font-bold transition-colors">Login</a>
-                                    <a href={links.trial} target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 rounded-lg font-bold text-white transition-all transform hover:-translate-y-1 hover:shadow-lg" style={{ backgroundColor: COLORS.primary }}>
-                                        Teste Grátis
-                                    </a>
-                                </div>
-
-                                <div className="md:hidden flex items-center">
-                                    <button onClick={toggleMenu} className="text-white hover:text-[#28e7c5]">
-                                        {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-                                    </button>
-                                </div>
+                                <button className="lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? <X size={28}/> : <Menu size={28}/>}</button>
                             </div>
                         </div>
-
-                        {/* Mobile Menu */}
                         {isMenuOpen && (
-                            <div className="md:hidden bg-[#16141a] border-b border-gray-800">
-                                <div className="px-4 pt-2 pb-6 space-y-4 flex flex-col">
-                                    <button onClick={() => scrollToSection('como-funciona')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">COMO FUNCIONA?</button>
-                                    <button onClick={() => scrollToSection('depoimentos')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">DEPOIMENTOS</button>
-                                    <button onClick={() => scrollToSection('solucoes')} className="text-left text-white font-bold hover:text-[#28e7c5] py-2">SOLUÇÕES</button>
-                                    <a href={links.api} target="_blank" rel="noopener noreferrer" className="text-left text-white font-bold hover:text-[#28e7c5] py-2">API PARA DESENVOLVEDORES</a>
-                                    <div className="h-px bg-gray-700 my-2"></div>
-                                    <a href={links.login} target="_blank" rel="noopener noreferrer" className="text-white font-bold py-2">Login</a>
-                                    <a href={links.trial} target="_blank" rel="noopener noreferrer" className="text-center py-3 rounded-lg font-bold text-white mt-2" style={{ backgroundColor: COLORS.primary }}>
-                                        QUERO TESTAR GRÁTIS
-                                    </a>
-                                </div>
+                            <div className="lg:hidden bg-[#16141a] p-4 flex flex-col space-y-4">
+                                <button onClick={() => scrollToSection('como-funciona')} className="text-left font-bold">COMO FUNCIONA</button>
+                                <button onClick={() => scrollToSection('depoimentos')} className="text-left font-bold uppercase">DEPOIMENTOS</button>
+                                <button onClick={() => scrollToSection('solucoes')} className="text-left font-bold">VANTAGENS</button>
+                                <button onClick={() => scrollToSection('planos')} className="text-left font-bold">PLANOS</button>
+                                <a href={links.api} target="_blank" className="text-left font-bold uppercase">API DEV</a>
+                                <div className="h-px bg-gray-800"></div>
+                                <a href={links.login} className="font-bold">LOGIN</a>
+                                <a href={links.trial} className="text-center py-3 rounded bg-[#6843e1] font-bold">TESTE GRÁTIS</a>
                             </div>
                         )}
                     </nav>
 
-                    {/* DOBRA 1: TUDO EM UM SÓ LUGAR */}
-                    <section className="pt-32 pb-20 bg-gradient-to-b from-[#201e26] to-[#16141a]">
-                        <div className="max-w-4xl mx-auto px-4 text-center">
-                            <img src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" alt="Logo" className="h-12 mx-auto mb-8" />
-                            
-                            <h2 className="text-3xl md:text-5xl font-bold mb-8">Tudo em um só lugar.</h2>
-                            
-                            <div className="flex flex-wrap justify-center gap-4 mb-12">
-                                {["CRM", "Atendimento", "Automações", "Agentes IA", "Relatórios", "Pagamentos"].map((tag) => (
-                                    <span key={tag} className="px-4 py-2 rounded-full border border-gray-700 text-sm text-gray-300">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-
-                            <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                                O Táime PRO substitui até <span className="text-white font-bold text-2xl">5 ferramentas</span>, centralizando sua operação e reduzindo custos drasticamente.
-                            </p>
-
-                            <div className="flex flex-col sm:flex-row justify-center gap-4">
-                                <a href={links.trial} target="_blank" rel="noopener noreferrer" className="px-10 py-5 rounded-xl font-bold text-xl text-white shadow-[0_0_30px_rgba(40,231,197,0.3)] hover:shadow-[0_0_50px_rgba(40,231,197,0.5)] transition-all transform hover:-translate-y-1" style={{ backgroundColor: COLORS.accent, color: COLORS.darker }}>
-                                    TESTE GRÁTIS POR 7 DIAS
-                                </a>
+                    {/* HERO */}
+                    <section className="pt-32 pb-0 bg-[#201e26] relative overflow-hidden">
+                        <div className="absolute top-20 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-2">
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                                <div className="text-center lg:text-left lg:col-span-5">
+                                    <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight mb-6 leading-tight">
+                                        Plataforma de atendimento multicanal com <span style={{ color: COLORS.accent }}>CRM nativo</span> para converter mais leads e fidelizar mais clientes
+                                    </h1>
+                                    <p className="mt-4 text-base md:text-lg text-gray-300 mb-10 leading-relaxed">
+                                        Tenha múltiplos atendentes em um único número através do <strong>CRM para WhatsApp</strong>. Acompanhe toda a jornada do lead com histórico unificado e automações inteligentes.
+                                    </p>
+                                    <div className="flex justify-center lg:justify-start">
+                                        <button onClick={() => scrollToSection('como-funciona')} className="px-10 py-5 rounded-full font-extrabold text-lg text-white bg-[#6843e1] shadow-xl transform hover:-translate-y-1 transition-all">Como Funciona?</button>
+                                    </div>
+                                </div>
+                                <div className="relative animate-fade-in mt-6 lg:mt-0 flex justify-center lg:col-span-7">
+                                    <div className="absolute inset-0 bg-[#6843e1] opacity-20 blur-[100px] rounded-full"></div>
+                                    <img src="https://i.ibb.co/W4TwJXwM/Preto-e-Roxo-Moderno-Aumente-Suas-Vendas-Marketing-Post-para-Instagram-3.png" alt="CRM para WhatsApp Táime PRO" className="relative z-10 w-full max-w-md lg:max-w-[110%] rounded-2xl shadow-2xl lg:-ml-8 lg:-mt-2" />
+                                </div>
                             </div>
                         </div>
                     </section>
 
-                    {/* DOBRA 2: COMO FUNCIONA */}
-                    <section id="como-funciona" className="py-20 bg-[#16141a] relative">
+                    {/* TUDO EM UM SÓ LUGAR */}
+                    <section id="tudo-em-um" className="pt-2 pb-6 bg-gradient-to-b from-[#201e26] to-[#16141a]">
+                        <div className="max-w-4xl mx-auto px-4 text-center">
+                            <h2 className="text-3xl md:text-5xl font-bold mb-3">Tudo em um só lugar.</h2>
+                            <div className="flex flex-wrap justify-center gap-4 mb-2 relative z-10">
+                                {["CRM", "Atendimento", "Automações", "Agentes IA", "Relatórios", "Pagamentos"].map((tag) => (
+                                    <span key={tag} className="px-6 py-2.5 rounded-full border border-gray-600 text-base font-medium text-gray-200 bg-[#201e26]/80 backdrop-blur-sm">{tag}</span>
+                                ))}
+                            </div>
+                            <div className="flex justify-center -mt-6 mb-0 px-4 relative z-0">
+                                <img src="https://i.ibb.co/kP48jhZ/2.png" alt="Atendimento Multicanal" className="w-full max-w-4xl mx-auto" />
+                            </div>
+                            <p className="text-xl text-gray-400 mb-6 -mt-8 relative z-10 max-w-2xl mx-auto bg-[#16141a]/60 backdrop-blur-sm rounded-xl py-2">
+                                O Táime PRO substitui até <span className="text-white font-bold text-2xl">5 ferramentas</span>, unificando sua operação e reduzindo custos.
+                            </p>
+                            <div className="flex justify-center mt-0">
+                                <a href={links.trial} target="_blank" className="px-12 py-5 rounded-full font-extrabold text-xl text-[#16141a] bg-[#28e7c5] shadow-lg uppercase tracking-wide transform hover:-translate-y-1 transition-all relative z-10">TESTE GRÁTIS POR 7 DIAS</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* COMO FUNCIONA (Placeholder visual) */}
+                    <section id="como-funciona" className="py-16 bg-[#16141a]">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                                
+                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                                 <div>
-                                    <h2 className="text-3xl md:text-4xl font-bold mb-6">Como funciona a plataforma?</h2>
-                                    <p className="text-gray-300 text-lg mb-6 leading-relaxed">
-                                        O <strong style={{ color: COLORS.accent }}>TÁIME PRO</strong> é uma plataforma multicanal que integra de forma nativa o WhatsApp, Instagram, Facebook e LinkedIn da sua empresa com um CRM inteligente.
-                                    </p>
-                                    
+                                    <h2 className="text-3xl font-bold mb-6">Como funciona a plataforma?</h2>
+                                    <p className="text-gray-300 mb-6 leading-relaxed">Integre de forma nativa o WhatsApp, Instagram e Facebook com um CRM inteligente que organiza o seu funil de vendas e centraliza toda a comunicação da sua empresa.</p>
                                     <ul className="space-y-4">
-                                        {[
-                                            "Aumentar suas vendas",
-                                            "Reter mais clientes",
-                                            "Melhorar eficiência do suporte e/ou CS",
-                                            "Reduzir custos operacionais e de licenças",
-                                            "Automatizar etapas de atendimento com IA",
-                                            "Centralizar diversos números em um só",
-                                            "Controle total das vendas e suporte"
-                                        ].map((item, index) => (
-                                            <li key={index} className="flex items-start">
-                                                <CheckCircle className="w-6 h-6 mr-3 flex-shrink-0" style={{ color: COLORS.accent }} />
-                                                <span className="text-gray-200">{item}</span>
+                                        {["Aumentar suas vendas", "Reter mais clientes", "Automação com IA", "Controle total do suporte"].map((item, i) => (
+                                            <li key={i} className="flex items-center gap-3">
+                                                <CheckCircle className="text-[#28e7c5]" size={20} />
+                                                <span>{item}</span>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
-
-                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-800 shadow-2xl">
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
-                                            <Users className="w-8 h-8 mb-2" style={{ color: COLORS.primary }} />
-                                            <span className="font-semibold text-sm">Múltiplos Atendentes</span>
-                                        </div>
-                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
-                                            <MessageSquare className="w-8 h-8 mb-2" style={{ color: COLORS.accent }} />
-                                            <span className="font-semibold text-sm">Canais Unificados</span>
-                                        </div>
-                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
-                                            <Database className="w-8 h-8 mb-2" style={{ color: COLORS.primary }} />
-                                            <span className="font-semibold text-sm">CRM Nativo</span>
-                                        </div>
-                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center hover:bg-[#322e3d] transition-colors">
-                                            <BarChart className="w-8 h-8 mb-2" style={{ color: COLORS.accent }} />
-                                            <span className="font-semibold text-sm">Indicadores</span>
-                                        </div>
-                                        <div className="bg-[#2a2733] p-4 rounded-lg flex flex-col items-center text-center col-span-2 hover:bg-[#322e3d] transition-colors">
-                                            <Zap className="w-8 h-8 mb-2 text-yellow-400" />
-                                            <span className="font-semibold text-sm">Automação & IA</span>
-                                        </div>
+                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-800">
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Users className="mx-auto mb-2 text-[#6843e1]" /><span className="text-xs font-bold">Atendentes</span></div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><MessageSquare className="mx-auto mb-2 text-[#28e7c5]" /><span className="text-xs font-bold">Canais</span></div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Database className="mx-auto mb-2 text-[#6843e1]" /><span className="text-xs font-bold">CRM</span></div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Zap className="mx-auto mb-2 text-[#28e7c5]" /><span className="text-xs font-bold">IA</span></div>
                                     </div>
                                 </div>
-                            </div>
+                             </div>
                         </div>
                     </section>
 
-                    {/* DOBRA 3: DEPOIMENTOS */}
-                    <section id="depoimentos" className="py-20 bg-[#201e26]">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="text-center mb-16">
-                                <h2 className="text-3xl font-bold mb-4">O que nossos clientes dizem</h2>
-                                <div className="w-24 h-1 mx-auto rounded-full" style={{ backgroundColor: COLORS.primary }}></div>
-                            </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                {depoimentosLista.map((item, index) => (
-                                    <div key={index} className="bg-[#16141a] p-8 rounded-xl border border-gray-800 shadow-lg flex flex-col items-center text-center min-h-[300px] relative group overflow-hidden transition-all hover:-translate-y-1 hover:border-[#6843e1]/50">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-[#6843e1]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                        
-                                        {/* Fundo branco para as logos manterem visibilidade ideal no tema escuro */}
-                                        <div className="bg-white/95 h-20 w-full rounded-lg flex items-center justify-center p-3 mb-6 shadow-md relative z-10">
-                                            <img src={item.logo} className="max-h-full max-w-full object-contain" alt={`Logo ${item.nome}`} />
-                                        </div>
-                                        
-                                        <p className="text-gray-300 italic mb-6 relative z-10 flex-grow text-sm md:text-base leading-relaxed">"{item.texto}"</p>
-                                        
-                                        <div className="mt-auto flex gap-1 relative z-10">
-                                            {[1,2,3,4,5].map(star => <span key={star} className="text-yellow-500">★</span>)}
-                                        </div>
+                    {/* DEPOIMENTOS */}
+                    <section id="depoimentos" className="py-16 bg-[#201e26]">
+                        <div className="max-w-7xl mx-auto px-4 text-center">
+                            <h2 className="text-3xl font-bold mb-12">O que nossos clientes dizem</h2>
+                            <div className="grid md:grid-cols-3 gap-8">
+                                {[
+                                    { logo: "https://evolucaoeducacional.com.br/wp-content/uploads/2023/04/iefe-evolucao-educacional-pos-graduacao-professores-educacao-segunda-licenciatura-professora-ensino-escola-faculdade-universidade-pedagogia-magisterio-logo3-1024x484.png", text: "Excelente plataforma de atendimento. Reduzimos o tempo de resposta em 60%." },
+                                    { logo: "https://administracaodecondominios.grupolegus.com.br/wp-content/webp-express/webp-images/uploads/2023/10/legus-administradora-de-condominios-zona-sul-sao-paulo-imobiliaria-imoveis-gestao-condominial-logo1.png.webp", text: "A integração do financeiro com o WhatsApp mudou nossa forma de cobrar." },
+                                    { logo: "https://silogica.com.br/wp-content/uploads/2024/08/logo-silogica-4.png", text: "O CRM nativo é fantástico. Tudo organizado em um só lugar." }
+                                ].map((d, i) => (
+                                    <div key={i} className="bg-[#16141a] p-8 rounded-2xl border border-gray-800 shadow-xl flex flex-col items-center">
+                                        <div className="h-16 flex items-center mb-6 bg-white p-2 rounded w-full justify-center"><img src={d.logo} className="max-h-full max-w-full object-contain" /></div>
+                                        <p className="text-sm italic text-gray-400">"{d.text}"</p>
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </section>
 
-                    {/* DOBRA 4: BENEFÍCIOS E SOLUÇÕES */}
-                    <section id="solucoes" className="py-20 bg-[#16141a]">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
-                            
-                            <div className="text-center max-w-3xl mx-auto">
-                                <h2 className="text-3xl md:text-4xl font-bold mb-6">Principais vantagens com implementação em apenas <span style={{ color: COLORS.accent }}>10 dias</span></h2>
+                    {/* VANTAGENS EXCLUSIVAS */}
+                    <section id="solucoes" className="py-16 bg-[#16141a]">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                            <div className="text-center max-w-4xl mx-auto">
+                                <h2 className="text-3xl md:text-5xl font-extrabold mb-4">Nossas <span style={{ color: COLORS.accent }}>Vantagens Exclusivas</span></h2>
+                                <p className="text-xl text-gray-400">Principais vantagens com implementação em apenas <span style={{ color: COLORS.accent }}>10 dias</span>:</p>
                             </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                                <div className="order-2 md:order-1">
-                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022b9892f8d19f66c6689c_CARDS%20AG%20MKT%20CRM.webp" alt="CRM" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
-                                </div>
-                                <div className="order-1 md:order-2">
-                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                                        <Database className="w-8 h-8" style={{ color: COLORS.primary }} />
-                                        CRM Inteligente Nativo
-                                    </h3>
-                                    <p className="text-gray-300 leading-relaxed">Não é uma integração, é uma única plataforma com funções completas de atendimento, gestão, funil e relatórios.</p>
-                                    <div className="mt-6 p-4 bg-[#201e26] rounded-lg border-l-4 border-[#25D366]">
-                                        <h4 className="font-bold flex items-center gap-2 mb-2 text-white">
-                                            <img src="https://cdn.helena.run/scripts/widget/v2/h-widget-whatsapp.png?v=2" alt="WhatsApp API" className="w-5 h-5" />
-                                            WhatsApp API Oficial
-                                        </h4>
-                                        <p className="text-sm text-gray-400">Toda a segurança que a sua empresa precisa para não sofrer suspensão ou bloqueios pela Meta.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                                <div>
-                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                                        <Smartphone className="w-8 h-8" style={{ color: COLORS.primary }} />
-                                        Atendimento Omnichannel
-                                    </h3>
-                                    <p className="text-gray-300 mb-4 leading-relaxed">Deixe seu cliente escolher o canal: WhatsApp, Instagram, Facebook e LinkedIn em um único painel, sempre organizado e vinculado ao CRM.</p>
-                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69011fdb44c68d00c94bc738_celular%20copy.webp" alt="Celular Omnichannel" className="w-full rounded-2xl shadow-2xl mt-6 border border-gray-800" />
-                                </div>
-                                <div>
-                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022b99a4cda42e5312b3f6_CARDS%20AG%20MKT%20CA.webp" alt="Atendimento" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-                                <div>
-                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                                        <Zap className="w-8 h-8" style={{ color: COLORS.accent }} />
-                                        IA e Automações
-                                    </h3>
-                                    <p className="text-gray-300 mb-6 leading-relaxed">Personalize todo o processo de atendimento. Sua equipe foca nas conversas que geram resultado, enquanto o sistema cuida do resto.</p>
-                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69022bb3c85e581a251e5074_CARDS%20AG%20MKT%20IA.webp" alt="IA" className="w-full rounded-2xl shadow-2xl border border-gray-800 mb-8" />
-                                </div>
-                                
-                                <div className="flex flex-col">
-                                    <div className="relative mb-8">
-                                        <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/690bb5f1f1a9dc310168abe5_pagamentos%20dobra%201%20copy%20(3)-p-1600.webp" alt="Pagamento Integrado" className="w-full rounded-2xl shadow-2xl border border-gray-800" />
-                                        <div className="absolute top-4 right-4 bg-[#16141a]/95 p-3 rounded-lg backdrop-blur-sm border border-gray-700 shadow-xl">
-                                            <img src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" className="h-6 w-auto" alt="TÁIME PRO" />
-                                        </div>
-                                    </div>
-                                    
-                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                                        <CreditCard className="w-8 h-8" style={{ color: COLORS.accent }} />
-                                        Financeiro Integrado
-                                    </h3>
-                                    <p className="text-gray-300 mb-4">O cliente negocia, paga e recebe suporte, sem sair da conversa.</p>
-                                </div>
-                            </div>
-
-                            {/* PACOTE DE HABILIDADES */}
-                            <div className="bg-[#201e26] rounded-3xl p-8 md:p-12 border border-gray-800">
-                                <h3 className="text-2xl font-bold text-center mb-8">Pacote de habilidades pronto para uso</h3>
-                                <p className="text-center text-gray-400 mb-10 -mt-6">Cada agente pode ser configurado com uma ou mais habilidades em poucos cliques.</p>
-                                
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {[
-                                        { title: "Etiquetas de Contato", desc: "Adicione ou remova etiquetas.", icon: <Users /> },
-                                        { title: "Transferir atendimento", desc: "Envie para outra equipe ou agente.", icon: <ArrowRight /> },
-                                        { title: "Concluir atendimento", desc: "Finalize a conversa automaticamente.", icon: <CheckCircle /> },
-                                        { title: "Criar Card no CRM", desc: "Cria um card com dados da conversa.", icon: <Database /> },
-                                        { title: "Acionar API", desc: "Envie dados e receba respostas.", icon: <Globe /> },
-                                        { title: "Fluxo do chatbot", desc: "Múltiplos agentes na mesma conversa.", icon: <MessageSquare /> },
-                                        { title: "Alterar contato", desc: "Adicione ou atualize informações.", icon: <Users /> },
-                                        { title: "Consultar Servidor MCP", desc: "Consultas em tempo real.", icon: <Database /> },
-                                        { title: "Helpdesk WhatsApp", desc: "Organiza chamados por fila.", icon: <Headphones /> },
-                                    ].map((skill, i) => (
-                                        <div key={i} className="p-6 rounded-xl shadow-lg hover:-translate-y-1 transition-all group" style={{ backgroundColor: COLORS.primary }}>
-                                            <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center mb-4 text-white group-hover:bg-white group-hover:text-[#6843e1] transition-colors">
-                                                {skill.icon}
-                                            </div>
-                                            <h4 className="font-bold text-lg mb-2 text-white">{skill.title}</h4>
-                                            <p className="text-sm text-white/80">{skill.desc}</p>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="mt-16 text-center">
-                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69012349c1399c2e2eb44696_IA%20dobra%202%20copy.webp" alt="Integração IA" className="w-full max-w-4xl mx-auto rounded-xl shadow-2xl" />
-                                </div>
-                                
-                                <div className="mt-12 text-center">
-                                    <a href={links.trial} target="_blank" rel="noopener noreferrer" className="inline-block px-10 py-4 rounded-full font-bold text-xl text-white shadow-lg transform hover:scale-105 transition-all" style={{ backgroundColor: COLORS.primary }}>
-                                        TESTE GRÁTIS POR 7 DIAS
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* DOBRA 5: PARA QUEM É */}
-                    <section className="py-20 bg-[#201e26] border-t border-gray-800">
-                        <div className="max-w-4xl mx-auto px-4 text-center">
-                            <h2 className="text-3xl font-bold mb-8">PARA QUEM É?</h2>
-                            <p className="text-xl text-gray-300 mb-10">Ideal para empresas com times de vendas, suporte ou customer success (B2B ou B2C):</p>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-12">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                                 {[
-                                    "Vendas consultivas com ciclo longo",
-                                    "Etapas complexas para concluir a venda",
-                                    "Dependência de follow-up estruturado",
-                                    "Desejo de melhorar conversão de leads",
-                                    "Necessidade de reduzir custos operacionais",
-                                    "Analisar em tempo real a operação através de dashboards e relatórios"
+                                    { title: "CRM inteligente nativo", desc: "Plataforma única com funções completas de atendimento, gestão e funil.", icon: <Database className="w-7 h-7" />, color: "#6843e1" },
+                                    { title: "WhatsApp API oficial", desc: "Toda a segurança da Meta para não sofrer suspensão ou bloqueios.", icon: <Smartphone className="w-7 h-7" />, color: "#25D366" },
+                                    { title: "Múltiplos canais", desc: "WhatsApp, Instagram, Facebook e LinkedIn em um único painel omnichannel.", icon: <MessageSquare className="w-7 h-7" />, color: "#28e7c5" },
+                                    { title: "IA e Automações", desc: "Personalize seu fluxo. Sua equipe foca no resultado enquanto a IA cuida do resto.", icon: <Zap className="w-7 h-7" />, color: "#6843e1" },
+                                    { title: "Financeiro integrado", desc: "Negocie e receba pagamentos via ASAAS sem sair da conversa do WhatsApp.", icon: <CreditCard className="w-7 h-7" />, color: "#28e7c5" },
+                                    { title: "Gestão por setores", desc: "Cada área com seu próprio funil e indicadores, mas com visão única do cliente.", icon: <Users className="w-7 h-7" />, color: "#6843e1" },
+                                    { title: "Helpdesk WhatsApp", desc: "Organização de chamados por fila e triagem com IA humanizada 24/7.", icon: <Headphones className="w-7 h-7" />, color: "#25D366" },
+                                    { title: "Relatórios BI", desc: "Insights de marketing e performance de equipes em dashboards tempo real.", icon: <BarChart className="w-7 h-7" />, color: "#6843e1" }
                                 ].map((item, i) => (
-                                    <div key={i} className="flex items-center bg-[#16141a] p-4 rounded-lg">
-                                        <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0" style={{ color: COLORS.accent }} />
-                                        <span>{item}</span>
+                                    <div key={i} className="bg-[#201e26] p-8 rounded-2xl border border-white/30 hover:border-opacity-100 transition-all hover:-translate-y-2 flex flex-col group" style={{ borderColor: item.color + '44' }}>
+                                        <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform" style={{ backgroundColor: item.color + '33', color: item.color }}>{item.icon}</div>
+                                        <h3 className="text-xl font-bold mb-4 text-white">{item.title}</h3>
+                                        <p className="text-gray-400 leading-relaxed text-sm flex-grow">{item.desc}</p>
                                     </div>
                                 ))}
                             </div>
+                            <div className="mt-8 text-center">
+                                <a href={links.trial} target="_blank" className="inline-block px-12 py-5 rounded-full font-extrabold text-xl text-[#16141a] bg-[#28e7c5] shadow-lg uppercase tracking-wide transform hover:-translate-y-1 transition-all">TESTE GRÁTIS POR 7 DIAS</a>
+                            </div>
 
-                            <a href={links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-8 py-4 rounded-lg font-bold text-lg text-[#201e26] hover:opacity-90 transition-all" style={{ backgroundColor: COLORS.accent }}>
-                                <Smartphone className="mr-2 w-5 h-5" />
-                                QUERO AGENDAR UMA DEMONSTRAÇÃO
-                            </a>
+                            {/* AGENTES IA */}
+                            <div className="bg-[#201e26] rounded-3xl p-8 md:p-12 border border-gray-800 mt-8">
+                                <h3 className="text-3xl md:text-4xl font-extrabold text-center mb-4">Agentes de IA para <span style={{ color: COLORS.accent }}>WhatsApp</span></h3>
+                                <p className="text-center text-xl text-gray-300 mb-2">Configure equipes inteligentes que atuam juntas em uma mesma conversa.</p>
+                                <p className="text-center text-lg text-gray-400 mb-8">Nada de códigos. É só escolher as habilidades e ativar.</p>
+                                <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69011012c2cbc4694cae542e_HOME%20AG%20DE%20IApsd-p-1600.webp" alt="Agentes de IA" className="w-full max-w-5xl mx-auto rounded-xl shadow-2xl mb-8" />
+                                <div className="text-center"><a href={links.trial} target="_blank" className="px-12 py-5 rounded-full font-extrabold text-xl text-white bg-[#6843e1] shadow-lg uppercase tracking-wide inline-block">TESTE GRÁTIS POR 7 DIAS</a></div>
+                            </div>
                         </div>
                     </section>
 
-                    {/* DOBRA 6: PROBLEMAS QUE RESOLVEMOS */}
-                    <section className="py-20 bg-[#16141a]">
+                    {/* DISPARO MENSAGENS */}
+                    <section className="py-8 bg-[#16141a] border-t border-gray-800">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="text-center mb-16">
-                                <h2 className="text-3xl md:text-4xl font-bold mb-4">Simplifique a solução dos seus problemas</h2>
-                                <p className="text-gray-400 max-w-2xl mx-auto">Adeus bagunça de integrações. O TÁIME PRO resolve de vez:</p>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
-                                    <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-6">
-                                        <MessageSquare className="text-red-500" />
-                                    </div>
-                                    <h3 className="text-xl font-bold mb-3">Conversas Acumuladas</h3>
-                                    <p className="text-gray-400">Organizadas automaticamente com etiquetas visuais e distribuídas para os departamentos certos.</p>
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                                <div className="lg:col-span-5 text-center lg:text-left">
+                                    <h2 className="text-3xl md:text-5xl font-extrabold mb-4">Disparo de mensagem por <span style={{ color: COLORS.accent }}>WhatsApp</span></h2>
+                                    <p className="text-lg text-gray-400 mb-8">Faça Campanhas de WhatsApp personalizadas e conte com métricas que medem o seu resultado real.</p>
+                                    <a href={links.demo} target="_blank" className="px-10 py-4 rounded-full font-extrabold text-lg text-white bg-[#6843e1] uppercase inline-block">Agendar Demonstração</a>
                                 </div>
-
-                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
-                                    <div className="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-6">
-                                        <Activity className="text-orange-500" />
-                                    </div>
-                                    <h3 className="text-xl font-bold mb-3">Leads que não respondem</h3>
-                                    <p className="text-gray-400">Relatório de ciclo de venda e tempo de resposta para recuperar leads perdidos.</p>
-                                </div>
-
-                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
-                                    <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6">
-                                        <BarChart className="text-blue-500" />
-                                    </div>
-                                    <h3 className="text-xl font-bold mb-3">Campanhas sem métricas</h3>
-                                    <p className="text-gray-400">Relatórios detalhados de conversão por etapa de funil e ROI de campanhas.</p>
-                                </div>
-
-                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors">
-                                    <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-6">
-                                        <DollarSign className="text-green-500" />
-                                    </div>
-                                    <h3 className="text-xl font-bold mb-3">Financeiro Manual</h3>
-                                    <p className="text-gray-400">Integração ASAAS: lembretes automáticos e confirmação imediata no WhatsApp.</p>
-                                </div>
-
-                                <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-700 hover:border-[#6843e1] transition-colors lg:col-span-2 flex flex-col justify-center">
-                                    <h3 className="text-xl font-bold mb-3 text-white">Autonomia de Processos</h3>
-                                    <p className="text-gray-400">Garanta a segurança do histórico e armazenamento de conversas, independente da rotatividade da equipe.</p>
-                                    <a href={links.trial} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block text-center px-6 py-3 rounded-lg font-bold text-white w-full md:w-auto self-start" style={{ backgroundColor: COLORS.primary }}>
-                                        QUERO INICIAR UM TESTE GRATUITO
-                                    </a>
+                                <div className="lg:col-span-7 flex justify-center">
+                                    <img src="https://i.ibb.co/XrJH8KSW/Design-sem-nome-15.png" alt="Disparo de Mensagens" className="rounded-2xl shadow-2xl" />
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    {/* DOBRA 7: SEGMENTOS */}
-                    <section className="py-16 bg-[#201e26]">
-                        <div className="max-w-6xl mx-auto px-4">
-                            <h2 className="text-3xl font-bold text-center mb-10">Segmentos que mais se beneficiam</h2>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                {[
-                                    "TI, SaaS e Software", "E-commerces", "Serviços B2B", "Indústria", 
-                                    "Seguros e Consórcios", "Construtoras", "Imobiliárias", "Educação"
-                                ].map((seg, i) => (
-                                    <div key={i} className="bg-[#16141a] p-4 rounded text-center border border-gray-800 hover:border-[#28e7c5] transition-colors cursor-default">
-                                        <span className="font-medium text-sm md:text-base">{seg}</span>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="text-center mt-10">
-                                <a href={links.demo} target="_blank" rel="noopener noreferrer" className="text-[#28e7c5] border border-[#28e7c5] px-6 py-3 rounded-lg hover:bg-[#28e7c5] hover:text-[#201e26] font-bold transition-all uppercase text-sm tracking-wide inline-block">
-                                    Agendar Demonstração Personalizada
-                                </a>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* DOBRA 8: PARA CADA DEPARTAMENTO (TABS) */}
-                    <section className="py-20 bg-[#16141a]">
+                    {/* INTEGRAÇÕES */}
+                    <section className="py-8 bg-[#201e26] border-t border-gray-800">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <h2 className="text-3xl font-bold text-center mb-8">Benefícios por Departamento</h2>
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                                <div className="lg:col-span-5 text-center lg:text-left order-2 lg:order-1">
+                                    <h2 className="text-3xl md:text-5xl font-extrabold mb-4">Integrações e <span style={{ color: COLORS.accent }}>Automações</span></h2>
+                                    <p className="text-lg text-gray-400 mb-8">API aberta para integrar sistemas existentes e unificar sua operação de <strong>atendimento omnichannel</strong>.</p>
+                                    <p className="text-sm text-white font-bold uppercase tracking-widest">¹ Disponível no plano PRO</p>
+                                </div>
+                                <div className="lg:col-span-7 flex justify-center order-1 lg:order-2 relative">
+                                    <div className="absolute inset-0 bg-[#28e7c5] opacity-10 blur-[100px] rounded-full"></div>
+                                    <img src="https://i.ibb.co/wZRZ215x/Preto-e-Roxo-Moderno-Aumente-Suas-Vendas-Marketing-Post-para-Instagram-2.png" alt="Integrações" className="relative z-10 w-full rounded-2xl shadow-2xl lg:-ml-4" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* PLANOS DETALHADOS - CORRIGIDOS E ALINHADOS */}
+                    <section id="planos" className="py-16 bg-[#16141a] border-t border-gray-800">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center mb-12"><h2 className="text-4xl font-extrabold">Escolha o seu plano</h2></div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {/* START */}
+                                <div className="bg-[#201e26] p-8 rounded-3xl border border-gray-800 flex flex-col">
+                                    <h3 className="text-2xl font-bold mb-4 uppercase">Start</h3>
+                                    <div className="mb-6">
+                                        <p className="text-4xl font-bold">R$ 485 <span className="text-sm font-normal text-gray-500">/Mês</span></p>
+                                        <p className="text-sm text-white mt-1 mb-6 font-medium">+ Taxa de Implantação</p>
+                                    </div>
+                                    <ul className="space-y-4 mb-8 text-sm flex-grow">
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> 5 Usuários</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> Central de Atendimento (1 canal Incluso)</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> CRM com funis de venda</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> Campos personalizados</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> Dashboards de atendimento</li>
+                                    </ul>
+                                    <button className="h-widget-trigger w-full py-4 border border-[#6843e1] rounded-full font-bold hover:bg-[#6843e1] uppercase transition-all">Quero contratar</button>
+                                </div>
+                                {/* PRO */}
+                                <div className="bg-[#201e26] p-8 rounded-3xl border-2 border-[#6843e1] relative shadow-2xl transform md:scale-105 flex flex-col z-10">
+                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#6843e1] px-6 py-1 rounded-full text-xs font-bold uppercase tracking-widest text-white">Mais Popular</span>
+                                    <h3 className="text-2xl font-bold mb-4 text-[#28e7c5] uppercase">Pro</h3>
+                                    <div className="mb-6">
+                                        <p className="text-4xl font-bold">R$ 970 <span className="text-sm font-normal text-gray-500">/Mês</span></p>
+                                        <p className="text-sm text-white mt-1 mb-6 font-medium">+ Taxa de Implantação</p>
+                                    </div>
+                                    <ul className="space-y-3 mb-8 text-sm flex-grow">
+                                        <li className="flex gap-2 text-white font-bold"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> 10 Usuários</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> Central de Atendimento (3 canais Inclusos)</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> CRM com funis, campos pers. e dashboards</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> Automação com Webhook, API, Disparos, Chatbots</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> Relatórios, Supervisão e Distribuição</li>
+                                        <li className="flex gap-2"><CheckCircle size={18} className="text-[#28e7c5] flex-shrink-0"/> Integração redes sociais e campanhas WhatsApp</li>
+                                    </ul>
+                                    <button className="h-widget-trigger w-full py-4 bg-[#6843e1] rounded-full font-extrabold shadow-lg uppercase tracking-wide text-white">Quero contratar</button>
+                                </div>
+                                {/* ENTERPRISE */}
+                                <div className="bg-[#201e26] p-8 rounded-3xl border border-gray-800 flex flex-col">
+                                    <h3 className="text-2xl font-bold mb-4 uppercase">Enterprise</h3>
+                                    <div className="mb-6"><p className="text-4xl font-bold">Sob consulta</p><p className="text-sm text-gray-500 mt-1 mb-6">&nbsp;</p></div>
+                                    <ul className="space-y-2 mb-8 text-xs flex-grow">
+                                        <li className="flex gap-2"><CheckCircle size={14} className="text-[#28e7c5] flex-shrink-0"/> Chatbot de Atendimento Inicial</li>
+                                        <li className="flex gap-2"><CheckCircle size={14} className="text-[#28e7c5] flex-shrink-0"/> Rastreio UTM e Transcrição de Áudio</li>
+                                        <li className="flex gap-2"><CheckCircle size={14} className="text-[#28e7c5] flex-shrink-0"/> Agentes de IA e Carteirização</li>
+                                        <li className="flex gap-2"><CheckCircle size={14} className="text-[#28e7c5] flex-shrink-0"/> 10.000 conversas gratuitas</li>
+                                        <li className="flex gap-2"><CheckCircle size={14} className="text-[#28e7c5] flex-shrink-0"/> Campanhas de disparo e Distribuição de contatos</li>
+                                        <li className="flex gap-2"><CheckCircle size={14} className="text-[#28e7c5] flex-shrink-0"/> Conversão por etapa e Relatórios personalizados</li>
+                                        <li className="flex gap-2"><CheckCircle size={14} className="text-[#28e7c5] flex-shrink-0"/> Suporte Exclusivo e Área de Membros</li>
+                                    </ul>
+                                    <button className="h-widget-trigger w-full py-4 border border-gray-600 rounded-full font-bold uppercase transition-all">Quero contratar</button>
+                                </div>
+                            </div>
                             
-                            <div className="flex justify-center mb-10">
-                                <div className="bg-[#201e26] p-1 rounded-xl inline-flex flex-wrap justify-center">
-                                    {['vendas', 'cs', 'suporte'].map((tab) => (
-                                        <button
-                                            key={tab}
-                                            onClick={() => setActiveTab(tab)}
-                                            className={`px-6 py-3 rounded-lg font-bold text-sm md:text-base transition-all m-1 ${activeTab === tab ? 'bg-[#6843e1] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
-                                        >
-                                            {tab === 'cs' ? 'CUSTOMER SUCCESS' : tab.toUpperCase()}
-                                        </button>
-                                    ))}
+                            {/* DESCONTOS ALINHADOS */}
+                            <div className="mt-16 flex flex-wrap justify-center items-center gap-6 text-sm font-bold">
+                                <div className="px-6 py-3 rounded-2xl bg-[#201e26] border border-gray-800 text-gray-400">
+                                    Trimestral: <span className="text-[#28e7c5]">5% OFF</span>
                                 </div>
-                            </div>
-
-                            <div className="bg-[#201e26] p-8 md:p-12 rounded-3xl border border-gray-800 min-h-[400px]">
-                                {activeTab === 'vendas' && (
-                                    <div className="animate-fade-in">
-                                        <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA VENDAS</h3>
-                                        <div className="grid md:grid-cols-2 gap-8">
-                                            <ul className="space-y-4">
-                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Mais conversões com vendedores focados</li>
-                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> 4x mais chances de fechar venda</li>
-                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Qualificação de leads eficiente</li>
-                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Dados dos clientes organizados</li>
-                                            </ul>
-                                            <ul className="space-y-4">
-                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Reciclagem de inativos com campanhas</li>
-                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Etiquetas Quente/Morno/Frio</li>
-                                                <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Transferência automática pós-venda</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                )}
-                                {activeTab === 'cs' && (
-                                    <div className="animate-fade-in">
-                                        <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA CUSTOMER SUCCESS</h3>
-                                        <ul className="space-y-4 grid md:grid-cols-2 gap-x-8">
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Fidelize clientes com experiência diferenciada</li>
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Chatbot para coleta de informações valiosas</li>
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Painel Kanban da jornada do cliente</li>
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Identifique pontos de melhoria facilmente</li>
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Mensagens em massa para sazonais</li>
-                                        </ul>
-                                    </div>
-                                )}
-                                {activeTab === 'suporte' && (
-                                    <div className="animate-fade-in">
-                                        <h3 className="text-2xl font-bold mb-6 text-[#28e7c5]">PARA SUPORTE</h3>
-                                        <ul className="space-y-4 grid md:grid-cols-2 gap-x-8">
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Clientes satisfeitos e equipe produtiva</li>
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Dúvidas comuns resolvidas automaticamente</li>
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Histórico completo para personalização</li>
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Atendimento imediato 24/7 com IA</li>
-                                            <li className="flex items-start"><CheckCircle className="w-5 h-5 mr-3 text-[#6843e1]"/> Monitoramento de volume em tempo real</li>
-                                        </ul>
-                                    </div>
-                                )}
-                                
-                                <div className="mt-10 text-center">
-                                    <button type="button" className="inline-block px-8 py-3 rounded bg-white text-[#201e26] font-bold hover:bg-gray-200 transition-colors h-widget-trigger">
-                                        QUERO MAIS INFORMAÇÕES
-                                    </button>
+                                <div className="px-6 py-3 rounded-2xl bg-[#201e26] border border-gray-800 text-gray-400">
+                                    Semestral: <span className="text-[#28e7c5]">10% OFF</span>
+                                </div>
+                                <div className="px-8 py-4 rounded-2xl border-2 border-[#6843e1] bg-[#6843e1]/10 text-white shadow-[0_0_20px_rgba(104,67,225,0.2)]">
+                                    Anual: <span className="text-[#28e7c5]">15% de desconto</span>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    {/* DOBRA 9: CAMADAS DE ATENDIMENTO */}
-                    <section className="py-20 bg-[#201e26] relative overflow-hidden">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="grid md:grid-cols-2 gap-12 items-center">
-                                <div>
-                                    <h2 className="text-3xl font-bold mb-8">Camadas de Atendimento</h2>
-                                    
-                                    <div className="space-y-8">
-                                        <div className="relative pl-8 border-l-2 border-[#6843e1]">
-                                            <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#6843e1]"></span>
-                                            <h3 className="text-xl font-bold mb-2">1. Camada Automática</h3>
-                                            <p className="text-gray-400">Disponível 24h com chatbot humanizado para responder leads e dúvidas.</p>
-                                        </div>
-                                        <div className="relative pl-8 border-l-2 border-[#28e7c5]">
-                                            <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#28e7c5]"></span>
-                                            <h3 className="text-xl font-bold mb-2">2. Camada Inteligente</h3>
-                                            <p className="text-gray-400">Integração via API e automações que eliminam esforço manual.</p>
-                                        </div>
-                                        <div className="relative pl-8 border-l-2 border-white">
-                                            <span className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white"></span>
-                                            <h3 className="text-xl font-bold mb-2">3. Camada Humana</h3>
-                                            <p className="text-gray-400">Equipe dedicada com todo histórico para proporcionar experiência única.</p>
-                                        </div>
-                                    </div>
-
-                                    <a href={links.demo} target="_blank" rel="noopener noreferrer" className="mt-10 inline-block px-8 py-3 rounded-lg font-bold text-white transition-all hover:opacity-90" style={{ backgroundColor: COLORS.primary }}>
-                                        AGENDAR DEMONSTRAÇÃO
-                                    </a>
-                                </div>
-                                
-                                <div className="relative">
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#201e26] to-transparent z-10 md:hidden"></div>
-                                    <img src="https://cdn.prod.website-files.com/68f8e278e8e0e488885e2280/69012349c1399c2e2eb44696_IA%20dobra%202%20copy.webp" alt="Camadas IA" className="rounded-xl shadow-2xl relative z-0" />
-                                </div>
+                    {/* BÔNUS */}
+                    <section className="py-16 bg-[#201e26] text-center border-t border-gray-800">
+                        <div className="max-w-5xl mx-auto px-4">
+                            <div className="inline-flex items-center gap-2 bg-[#6843e1]/20 px-6 py-2 rounded-full mb-8 border border-[#6843e1]/40"><Gift className="text-[#6843e1]" size={20} /><span className="text-xs font-bold uppercase tracking-widest">Bónus Exclusivo</span></div>
+                            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">ÁREA DE MEMBROS</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><Award className="mx-auto mb-6 text-[#6843e1]" size={48}/><h4 className="font-bold text-xl mb-4">Treinamento Vendas</h4><p className="text-sm text-gray-400">Melhores técnicas de mercado para times de alta performance.</p></div>
+                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><Zap className="mx-auto mb-6 text-[#28e7c5]" size={48}/><h4 className="font-bold text-xl mb-4">Estratégias Abordagem</h4><p className="text-sm text-gray-400">Scripts validados para WhatsApp e atendimento omnichannel.</p></div>
+                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><ArrowRight className="mx-auto mb-6 text-[#6843e1]" size={48}/><h4 className="font-bold text-xl mb-4">Métodos Conversão</h4><p className="text-sm text-gray-400">Aprenda a otimizar cada etapa do seu funil e escalar vendas.</p></div>
                             </div>
                         </div>
                     </section>
 
-                    {/* ÚLTIMA DOBRA (Fechamento Final) */}
-                    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-b from-[#16141a] to-[#0f0e11]">
+                    {/* FINAL */}
+                    <section className="py-20 px-4 text-center bg-gradient-to-b from-[#16141a] to-[#0f0e11] relative overflow-hidden">
                         <div className="absolute top-20 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
-                        
-                        <div className="max-w-7xl mx-auto text-center relative z-10">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#6843e1]/10 border border-[#6843e1]/30 mb-8">
-                                <span className="w-2 h-2 rounded-full bg-[#28e7c5] animate-pulse"></span>
-                                <span className="text-[#28e7c5] text-sm font-semibold tracking-wide uppercase">Nova Era do Atendimento</span>
-                            </div>
-                            
-                            <p className="text-xl md:text-2xl font-normal mb-6 leading-relaxed text-white">
-                                Plataforma de atendimento multicanal com <strong style={{ color: COLORS.accent }}>CRM nativo</strong> para converter mais leads
-                            </p>
-                            
-                            <p className="mt-4 text-lg text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
-                                Tenha múltiplos atendentes em um único número, converta suas mensagens e demandas em oportunidades de negócio, acompanhe toda a jornada do seu lead com histórico unificado.
-                            </p>
-                            
-                            <div className="flex justify-center">
-                                <a href={links.trial} target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-xl font-bold text-lg transition-all hover:opacity-90 hover:shadow-lg inline-block" style={{ backgroundColor: '#ffffff', color: '#6843e1' }}>
-                                    Iniciar Teste Grátis
-                                </a>
-                            </div>
+                        <div className="max-w-4xl mx-auto relative z-10">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#6843e1]/10 border border-[#6843e1]/30 mb-8"><span className="w-2 h-2 rounded-full bg-[#28e7c5] animate-pulse"></span><span className="text-[#28e7c5] text-sm font-semibold uppercase">Nova Era do Atendimento</span></div>
+                            <h2 className="text-3xl md:text-4xl font-extrabold mb-10 leading-relaxed text-white text-center">
+                                Plataforma de atendimento multicanal com <span style={{ color: COLORS.accent }}>CRM nativo</span> para converter mais leads
+                            </h2>
+                            <a href={links.trial} target="_blank" className="px-12 py-5 rounded-xl font-bold text-xl bg-white text-[#6843e1] shadow-lg transition-all hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] inline-block">Iniciar Teste Grátis</a>
                         </div>
                     </section>
 
-                    {/* FOOTER */}
-                    <footer className="py-8 bg-[#0f0e11] text-center border-t border-gray-800 relative z-10">
-                        <p className="text-sm text-gray-600">
-                            © {new Date().getFullYear()} TÁIME PRO. Todos os direitos reservados.
+                    <footer className="py-8 bg-[#0f0e11] text-center border-t border-gray-800 text-xs text-gray-600">
+                        <p>© {new Date().getFullYear()} TÁIME PRO. Todos os direitos reservados.</p>
+                        <p className="mt-4 flex justify-center gap-6">
+                            <a href={links.api} target="_blank" className="hover:text-white transition-colors uppercase font-bold">API DEV</a>
+                            <a href={links.demo} target="_blank" className="hover:text-white transition-colors uppercase font-bold">Agendar Demo</a>
                         </p>
                     </footer>
-
                 </div>
             );
         };
 
-        // Renderiza o React no Documento
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
