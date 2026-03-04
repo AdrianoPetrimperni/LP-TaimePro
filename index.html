@@ -133,39 +133,39 @@
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="flex justify-between items-center h-20">
                                 <img className="h-10 w-auto cursor-pointer" src="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg" alt="Táime PRO" onClick={() => window.scrollTo(0,0)} />
-                                <div className="hidden lg:flex items-center space-x-6">
-                                    <button onClick={() => scrollToSection('como-funciona')} className="text-white hover:text-[#28e7c5] text-sm font-bold">COMO FUNCIONA</button>
-                                    <button onClick={() => scrollToSection('depoimentos')} className="text-white hover:text-[#28e7c5] text-sm font-bold uppercase">Depoimentos</button>
-                                    <button onClick={() => scrollToSection('solucoes')} className="text-white hover:text-[#28e7c5] text-sm font-bold">VANTAGENS</button>
-                                    <button onClick={() => scrollToSection('planos')} className="text-white hover:text-[#28e7c5] text-sm font-bold">PLANOS</button>
-                                    <a href={links.api} target="_blank" className="text-white hover:text-[#28e7c5] text-sm font-bold uppercase">API DEV</a>
-                                    <a href={links.login} target="_blank" className="text-white font-bold hover:text-[#28e7c5]">Login</a>
-                                    <a href={links.trial} target="_blank" className="px-6 py-3 rounded-full font-bold text-white bg-[#6843e1] shadow-lg transform hover:-translate-y-1 transition-all">Teste Grátis</a>
+                                <div className="hidden lg:flex items-center space-x-6 text-xs xl:text-sm">
+                                    <button onClick={() => scrollToSection('como-funciona')} className="text-white hover:text-[#28e7c5] font-bold uppercase">Como Funciona</button>
+                                    <button onClick={() => scrollToSection('depoimentos')} className="text-white hover:text-[#28e7c5] font-bold uppercase">Depoimentos</button>
+                                    <button onClick={() => scrollToSection('solucoes')} className="text-white hover:text-[#28e7c5] font-bold uppercase">Vantagens</button>
+                                    <button onClick={() => scrollToSection('planos')} className="text-white hover:text-[#28e7c5] font-bold uppercase">Planos</button>
+                                    <a href={links.api} target="_blank" className="text-white hover:text-[#28e7c5] font-bold uppercase">API Dev</a>
+                                    <a href={links.login} target="_blank" className="text-white font-bold hover:text-[#28e7c5] uppercase">Login</a>
+                                    <a href={links.trial} target="_blank" className="px-5 py-2.5 rounded-full font-bold text-white bg-[#6843e1] shadow-lg transform hover:-translate-y-1 transition-all uppercase">Teste Grátis</a>
                                 </div>
                                 <button className="lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? <X size={28}/> : <Menu size={28}/>}</button>
                             </div>
                         </div>
                         {isMenuOpen && (
                             <div className="lg:hidden bg-[#16141a] p-4 flex flex-col space-y-4">
-                                <button onClick={() => scrollToSection('como-funciona')} className="text-left font-bold">COMO FUNCIONA</button>
-                                <button onClick={() => scrollToSection('depoimentos')} className="text-left font-bold uppercase">DEPOIMENTOS</button>
-                                <button onClick={() => scrollToSection('solucoes')} className="text-left font-bold">VANTAGENS</button>
-                                <button onClick={() => scrollToSection('planos')} className="text-left font-bold">PLANOS</button>
-                                <a href={links.api} target="_blank" className="text-left font-bold uppercase">API DEV</a>
+                                <button onClick={() => scrollToSection('como-funciona')} className="text-left font-bold uppercase">Como Funciona</button>
+                                <button onClick={() => scrollToSection('depoimentos')} className="text-left font-bold uppercase">Depoimentos</button>
+                                <button onClick={() => scrollToSection('solucoes')} className="text-left font-bold uppercase">Vantagens</button>
+                                <button onClick={() => scrollToSection('planos')} className="text-left font-bold uppercase">Planos</button>
+                                <a href={links.api} target="_blank" className="text-left font-bold uppercase text-sm">API Dev</a>
                                 <div className="h-px bg-gray-800"></div>
-                                <a href={links.login} className="font-bold">LOGIN</a>
-                                <a href={links.trial} className="text-center py-3 rounded bg-[#6843e1] font-bold">TESTE GRÁTIS</a>
+                                <a href={links.login} className="font-bold uppercase">Login</a>
+                                <a href={links.trial} className="text-center py-3 rounded-full bg-[#6843e1] font-bold uppercase">Teste Grátis</a>
                             </div>
                         )}
                     </nav>
 
-                    {/* HERO */}
-                    <section className="pt-32 pb-0 bg-[#201e26] relative overflow-hidden">
-                        <div className="absolute top-20 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
+                    {/* HERO - ESPAÇAMENTO CORRIGIDO (pt-24 em vez de pt-32) */}
+                    <section className="pt-24 pb-0 bg-[#201e26] relative overflow-hidden">
+                        <div className="absolute top-10 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-2">
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                                 <div className="text-center lg:text-left lg:col-span-5">
-                                    <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight mb-6 leading-tight">
+                                    <h1 className="text-3xl lg:text-4xl xl:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
                                         Plataforma de atendimento multicanal com <span style={{ color: COLORS.accent }}>CRM nativo</span> para converter mais leads e fidelizar mais clientes
                                     </h1>
                                     <p className="mt-4 text-base md:text-lg text-gray-300 mb-10 leading-relaxed">
@@ -204,7 +204,7 @@
                         </div>
                     </section>
 
-                    {/* COMO FUNCIONA (Placeholder visual) */}
+                    {/* COMO FUNCIONA */}
                     <section id="como-funciona" className="py-16 bg-[#16141a]">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -222,10 +222,10 @@
                                 </div>
                                 <div className="bg-[#201e26] p-8 rounded-2xl border border-gray-800">
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Users className="mx-auto mb-2 text-[#6843e1]" /><span className="text-xs font-bold">Atendentes</span></div>
-                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><MessageSquare className="mx-auto mb-2 text-[#28e7c5]" /><span className="text-xs font-bold">Canais</span></div>
-                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Database className="mx-auto mb-2 text-[#6843e1]" /><span className="text-xs font-bold">CRM</span></div>
-                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Zap className="mx-auto mb-2 text-[#28e7c5]" /><span className="text-xs font-bold">IA</span></div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Users className="mx-auto mb-2 text-[#6843e1]" /><span className="text-xs font-bold uppercase">Atendentes</span></div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><MessageSquare className="mx-auto mb-2 text-[#28e7c5]" /><span className="text-xs font-bold uppercase">Canais</span></div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Database className="mx-auto mb-2 text-[#6843e1]" /><span className="text-xs font-bold uppercase">CRM</span></div>
+                                        <div className="bg-[#2a2733] p-4 rounded-lg text-center"><Zap className="mx-auto mb-2 text-[#28e7c5]" /><span className="text-xs font-bold uppercase">IA</span></div>
                                     </div>
                                 </div>
                              </div>
@@ -235,15 +235,15 @@
                     {/* DEPOIMENTOS */}
                     <section id="depoimentos" className="py-16 bg-[#201e26]">
                         <div className="max-w-7xl mx-auto px-4 text-center">
-                            <h2 className="text-3xl font-bold mb-12">O que nossos clientes dizem</h2>
+                            <h2 className="text-3xl font-bold mb-12 uppercase tracking-wide">O que nossos clientes dizem</h2>
                             <div className="grid md:grid-cols-3 gap-8">
                                 {[
                                     { logo: "https://evolucaoeducacional.com.br/wp-content/uploads/2023/04/iefe-evolucao-educacional-pos-graduacao-professores-educacao-segunda-licenciatura-professora-ensino-escola-faculdade-universidade-pedagogia-magisterio-logo3-1024x484.png", text: "Excelente plataforma de atendimento. Reduzimos o tempo de resposta em 60%." },
                                     { logo: "https://administracaodecondominios.grupolegus.com.br/wp-content/webp-express/webp-images/uploads/2023/10/legus-administradora-de-condominios-zona-sul-sao-paulo-imobiliaria-imoveis-gestao-condominial-logo1.png.webp", text: "A integração do financeiro com o WhatsApp mudou nossa forma de cobrar." },
                                     { logo: "https://silogica.com.br/wp-content/uploads/2024/08/logo-silogica-4.png", text: "O CRM nativo é fantástico. Tudo organizado em um só lugar." }
                                 ].map((d, i) => (
-                                    <div key={i} className="bg-[#16141a] p-8 rounded-2xl border border-gray-800 shadow-xl flex flex-col items-center">
-                                        <div className="h-16 flex items-center mb-6 bg-white p-2 rounded w-full justify-center"><img src={d.logo} className="max-h-full max-w-full object-contain" /></div>
+                                    <div key={i} className="bg-[#16141a] p-8 rounded-2xl border border-gray-800 shadow-xl flex flex-col items-center hover:border-[#6843e1] transition-all">
+                                        <div className="h-16 flex items-center mb-6 bg-white p-2 rounded w-full justify-center shadow-inner"><img src={d.logo} className="max-h-full max-w-full object-contain" alt="Depoimento"/></div>
                                         <p className="text-sm italic text-gray-400">"{d.text}"</p>
                                     </div>
                                 ))}
@@ -296,12 +296,12 @@
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                                 <div className="lg:col-span-5 text-center lg:text-left">
-                                    <h2 className="text-3xl md:text-5xl font-extrabold mb-4">Disparo de mensagem por <span style={{ color: COLORS.accent }}>WhatsApp</span></h2>
-                                    <p className="text-lg text-gray-400 mb-8">Faça Campanhas de WhatsApp personalizadas e conte com métricas que medem o seu resultado real.</p>
-                                    <a href={links.demo} target="_blank" className="px-10 py-4 rounded-full font-extrabold text-lg text-white bg-[#6843e1] uppercase inline-block">Agendar Demonstração</a>
+                                    <h2 className="text-3xl md:text-5xl font-extrabold mb-4 uppercase">Disparo de mensagem por <span style={{ color: COLORS.accent }}>WhatsApp</span></h2>
+                                    <p className="text-lg text-gray-400 mb-8 leading-relaxed">Faça Campanhas de WhatsApp personalizadas e conte com métricas que medem o seu resultado real através de envios estratégicos.</p>
+                                    <a href={links.demo} target="_blank" className="px-10 py-4 rounded-full font-extrabold text-lg text-white bg-[#6843e1] uppercase inline-block shadow-lg">Agendar Demonstração</a>
                                 </div>
                                 <div className="lg:col-span-7 flex justify-center">
-                                    <img src="https://i.ibb.co/XrJH8KSW/Design-sem-nome-15.png" alt="Disparo de Mensagens" className="rounded-2xl shadow-2xl" />
+                                    <img src="https://i.ibb.co/XrJH8KSW/Design-sem-nome-15.png" alt="Disparo de Mensagens" className="rounded-2xl shadow-2xl transform hover:rotate-1 transition-transform" />
                                 </div>
                             </div>
                         </div>
@@ -312,7 +312,7 @@
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                                 <div className="lg:col-span-5 text-center lg:text-left order-2 lg:order-1">
-                                    <h2 className="text-3xl md:text-5xl font-extrabold mb-4">Integrações e <span style={{ color: COLORS.accent }}>Automações</span></h2>
+                                    <h2 className="text-3xl md:text-5xl font-extrabold mb-4 uppercase">Integrações e <span style={{ color: COLORS.accent }}>Automações</span></h2>
                                     <p className="text-lg text-gray-400 mb-8">API aberta para integrar sistemas existentes e unificar sua operação de <strong>atendimento omnichannel</strong>.</p>
                                     <p className="text-sm text-white font-bold uppercase tracking-widest">¹ Disponível no plano PRO</p>
                                 </div>
@@ -324,13 +324,13 @@
                         </div>
                     </section>
 
-                    {/* PLANOS DETALHADOS - CORRIGIDOS E ALINHADOS */}
+                    {/* PLANOS DETALHADOS */}
                     <section id="planos" className="py-16 bg-[#16141a] border-t border-gray-800">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="text-center mb-12"><h2 className="text-4xl font-extrabold">Escolha o seu plano</h2></div>
+                            <div className="text-center mb-12"><h2 className="text-4xl font-extrabold uppercase">Escolha o seu plano</h2></div>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                 {/* START */}
-                                <div className="bg-[#201e26] p-8 rounded-3xl border border-gray-800 flex flex-col">
+                                <div className="bg-[#201e26] p-8 rounded-3xl border border-gray-800 flex flex-col hover:border-gray-600 transition-all">
                                     <h3 className="text-2xl font-bold mb-4 uppercase">Start</h3>
                                     <div className="mb-6">
                                         <p className="text-4xl font-bold">R$ 485 <span className="text-sm font-normal text-gray-500">/Mês</span></p>
@@ -364,7 +364,7 @@
                                     <button className="h-widget-trigger w-full py-4 bg-[#6843e1] rounded-full font-extrabold shadow-lg uppercase tracking-wide text-white">Quero contratar</button>
                                 </div>
                                 {/* ENTERPRISE */}
-                                <div className="bg-[#201e26] p-8 rounded-3xl border border-gray-800 flex flex-col">
+                                <div className="bg-[#201e26] p-8 rounded-3xl border border-gray-800 flex flex-col hover:border-gray-600 transition-all">
                                     <h3 className="text-2xl font-bold mb-4 uppercase">Enterprise</h3>
                                     <div className="mb-6"><p className="text-4xl font-bold">Sob consulta</p><p className="text-sm text-gray-500 mt-1 mb-6">&nbsp;</p></div>
                                     <ul className="space-y-2 mb-8 text-xs flex-grow">
@@ -388,7 +388,7 @@
                                 <div className="px-6 py-3 rounded-2xl bg-[#201e26] border border-gray-800 text-gray-400">
                                     Semestral: <span className="text-[#28e7c5]">10% OFF</span>
                                 </div>
-                                <div className="px-8 py-4 rounded-2xl border-2 border-[#6843e1] bg-[#6843e1]/10 text-white shadow-[0_0_20px_rgba(104,67,225,0.2)]">
+                                <div className="px-8 py-4 rounded-2xl border-2 border-[#6843e1] bg-[#6843e1]/10 text-white shadow-[0_0_20px_rgba(104,67,225,0.2)] scale-105">
                                     Anual: <span className="text-[#28e7c5]">15% de desconto</span>
                                 </div>
                             </div>
@@ -399,11 +399,11 @@
                     <section className="py-16 bg-[#201e26] text-center border-t border-gray-800">
                         <div className="max-w-5xl mx-auto px-4">
                             <div className="inline-flex items-center gap-2 bg-[#6843e1]/20 px-6 py-2 rounded-full mb-8 border border-[#6843e1]/40"><Gift className="text-[#6843e1]" size={20} /><span className="text-xs font-bold uppercase tracking-widest">Bónus Exclusivo</span></div>
-                            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">ÁREA DE MEMBROS</h2>
+                            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 uppercase tracking-tighter">ÁREA DE MEMBROS</h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><Award className="mx-auto mb-6 text-[#6843e1]" size={48}/><h4 className="font-bold text-xl mb-4">Treinamento Vendas</h4><p className="text-sm text-gray-400">Melhores técnicas de mercado para times de alta performance.</p></div>
-                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><Zap className="mx-auto mb-6 text-[#28e7c5]" size={48}/><h4 className="font-bold text-xl mb-4">Estratégias Abordagem</h4><p className="text-sm text-gray-400">Scripts validados para WhatsApp e atendimento omnichannel.</p></div>
-                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><ArrowRight className="mx-auto mb-6 text-[#6843e1]" size={48}/><h4 className="font-bold text-xl mb-4">Métodos Conversão</h4><p className="text-sm text-gray-400">Aprenda a otimizar cada etapa do seu funil e escalar vendas.</p></div>
+                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><Award className="mx-auto mb-6 text-[#6843e1]" size={48}/><h4 className="font-bold text-xl mb-4 uppercase">Treinamento Vendas</h4><p className="text-sm text-gray-400">Melhores técnicas de mercado para times de alta performance.</p></div>
+                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><Zap className="mx-auto mb-6 text-[#28e7c5]" size={48}/><h4 className="font-bold text-xl mb-4 uppercase">Estratégias Abordagem</h4><p className="text-sm text-gray-400">Scripts validados para WhatsApp e atendimento omnichannel.</p></div>
+                                <div className="p-8 bg-[#16141a] rounded-3xl border border-gray-800 transform hover:-translate-y-1 transition-all"><ArrowRight className="mx-auto mb-6 text-[#6843e1]" size={48}/><h4 className="font-bold text-xl mb-4 uppercase">Métodos Conversão</h4><p className="text-sm text-gray-400">Aprenda a otimizar cada etapa do seu funil e escalar vendas.</p></div>
                             </div>
                         </div>
                     </section>
@@ -412,20 +412,20 @@
                     <section className="py-20 px-4 text-center bg-gradient-to-b from-[#16141a] to-[#0f0e11] relative overflow-hidden">
                         <div className="absolute top-20 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
                         <div className="max-w-4xl mx-auto relative z-10">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#6843e1]/10 border border-[#6843e1]/30 mb-8"><span className="w-2 h-2 rounded-full bg-[#28e7c5] animate-pulse"></span><span className="text-[#28e7c5] text-sm font-semibold uppercase">Nova Era do Atendimento</span></div>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#6843e1]/10 border border-[#6843e1]/30 mb-8"><span className="w-2 h-2 rounded-full bg-[#28e7c5] animate-pulse"></span><span className="text-[#28e7c5] text-sm font-semibold uppercase tracking-widest">Nova Era do Atendimento</span></div>
                             <h2 className="text-3xl md:text-4xl font-extrabold mb-10 leading-relaxed text-white text-center">
                                 Plataforma de atendimento multicanal com <span style={{ color: COLORS.accent }}>CRM nativo</span> para converter mais leads
                             </h2>
-                            <a href={links.trial} target="_blank" className="px-12 py-5 rounded-xl font-bold text-xl bg-white text-[#6843e1] shadow-lg transition-all hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] inline-block">Iniciar Teste Grátis</a>
+                            <a href={links.trial} target="_blank" className="px-12 py-5 rounded-xl font-bold text-xl bg-white text-[#6843e1] shadow-lg transition-all hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] inline-block uppercase tracking-wider">Iniciar Teste Grátis</a>
                         </div>
                     </section>
 
                     <footer className="py-8 bg-[#0f0e11] text-center border-t border-gray-800 text-xs text-gray-600">
-                        <p>© {new Date().getFullYear()} TÁIME PRO. Todos os direitos reservados.</p>
-                        <p className="mt-4 flex justify-center gap-6">
-                            <a href={links.api} target="_blank" className="hover:text-white transition-colors uppercase font-bold">API DEV</a>
-                            <a href={links.demo} target="_blank" className="hover:text-white transition-colors uppercase font-bold">Agendar Demo</a>
-                        </p>
+                        <p className="uppercase tracking-widest mb-4">© {new Date().getFullYear()} TÁIME PRO. Todos os direitos reservados.</p>
+                        <div className="flex justify-center gap-6">
+                            <a href={links.api} target="_blank" className="hover:text-white transition-colors uppercase font-bold text-[10px]">API Dev</a>
+                            <a href={links.demo} target="_blank" className="hover:text-white transition-colors uppercase font-bold text-[10px]">Agendar Demo</a>
+                        </div>
                     </footer>
                 </div>
             );
