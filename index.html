@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
+    <!-- ✅ FAVICONS CORRIGIDOS — URLs absolutas -->
+    <link rel="shortcut icon" href="https://taime.pro/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://taime.pro/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://taime.pro/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://taime.pro/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://taime.pro/apple-touch-icon.png">
+    <!-- Fallback SVG: usa o logo oficial caso o .ico não carregue -->
+    <link rel="icon" type="image/svg+xml" href="https://cdn.wts.chat/static/partners/app.taime.pro/logo-text-on-dark.svg">
 
     <!-- SEO Enterprise (Invisível para o utilizador) -->
     <title>CRM para WhatsApp e Atendimento Multicanal | Táime PRO</title>
@@ -167,7 +168,7 @@
                         )}
                     </nav>
 
-                    {/* HERO - ESPAÇAMENTO CORRIGIDO */}
+                    {/* HERO */}
                     <section className="pt-24 pb-0 bg-[#201e26] relative overflow-hidden">
                         <div className="absolute top-10 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-2">
@@ -388,7 +389,7 @@
                                 </div>
                             </div>
                             
-                            {/* DESCONTOS ALINHADOS - CORREÇÃO DE ALINHAMENTO */}
+                            {/* DESCONTOS */}
                             <div className="mt-20 flex flex-col md:flex-row justify-center items-center gap-6 md:gap-10">
                                 <div className="px-6 py-3 rounded-2xl bg-[#201e26] border border-gray-800 text-sm font-bold shadow-md">
                                     Trimestral: <span className="text-[#28e7c5] ml-1">5% OFF</span>
@@ -416,7 +417,7 @@
                         </div>
                     </section>
 
-                    {/* FINAL */}
+                    {/* FINAL CTA */}
                     <section className="py-24 px-4 text-center bg-gradient-to-b from-[#16141a] to-[#0f0e11] relative overflow-hidden">
                         <div className="absolute top-20 right-0 w-96 h-96 bg-[#6843e1] opacity-20 blur-[128px] rounded-full pointer-events-none"></div>
                         <div className="max-w-4xl mx-auto relative z-10">
@@ -444,4 +445,4 @@
         root.render(<App />);
     </script>
 </body>
-</html> eof
+</html>
